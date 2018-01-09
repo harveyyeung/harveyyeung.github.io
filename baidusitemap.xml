@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+
+    
+  <url>
+    <loc>https://harveyyeung.github.io/2018/01/09/PracPythonOpenCV3/</loc>
+    <lastmod>2018-01-09T09:44:26.195Z</lastmod>
+    <data>
+        <display>
+        <title>opencv入门3:图片操作-image transformations</title>
+        <pubTime>2018-01-09T09:32:08.000Z</pubTime>
+        
+        <tag>opencv</tag>
+         
+        <tag>python</tag>
+         
+         
+           
+             
+              <breadCrumb title="opencv" url="https://harveyyeung.github.io/categories/opencv/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://harveyyeung.github.io/2018/01/05/PracPythonOpenCV2/</loc>
+    <lastmod>2018-01-08T04:23:47.490Z</lastmod>
+    <data>
+        <display>
+        <title>opencv入门2:使用opencv简单画图</title>
+        <pubTime>2018-01-05T07:23:38.000Z</pubTime>
+        
+        <tag>opencv</tag>
+         
+        <tag>python</tag>
+         
+         
+           
+             
+              <breadCrumb title="opencv" url="https://harveyyeung.github.io/categories/opencv/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://harveyyeung.github.io/2018/01/05/PracPythonOpenCV1/</loc>
+    <lastmod>2018-01-08T04:15:47.861Z</lastmod>
+    <data>
+        <display>
+        <title>opencv入门1:opencv开发前的准备工作</title>
+        <pubTime>2018-01-05T05:36:34.000Z</pubTime>
+        
+        <tag>opencv</tag>
+         
+        <tag>python</tag>
+         
+         
+           
+             
+              <breadCrumb title="opencv" url="https://harveyyeung.github.io/categories/opencv/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+    
+    
+</urlset>
