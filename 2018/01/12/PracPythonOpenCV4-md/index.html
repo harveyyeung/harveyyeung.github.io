@@ -81,23 +81,21 @@
 
 
 
-<meta name="description" content="如opencv开发前的准备工作中所说,此系列文章是在学习Practical Python and OpenCV(点击下载)这本书的一些记录,发出来的文章跳过了第三章对RGB,以及numpy简单操作等介绍，请大家下载原书查看，在原书中对一下段落已进行翻译注释。文章系列完整展示代码点击下载  线和矩形画线drawing.py123456789101112131415161718192021222324">
+<meta name="description" content="RGB的像素值都在[0,255],如果我们想给一个250的像素再加十个像素会怎么样？ NumPy将执行模算术和“环绕”。比如250 再加10像素，会绕回到4，OpenCV 将执行剪切并确保像素值永远不会超出范围[0,255] NumPy will perform modulo arithmetic and “wrap around”.OpenCV, on the other hand, will">
 <meta name="keywords" content="opencv,python">
 <meta property="og:type" content="article">
-<meta property="og:title" content="opencv入门2:使用opencv简单画图">
-<meta property="og:url" content="https://harveyyeung.github.io/2018/01/05/PracPythonOpenCV2/index.html">
+<meta property="og:title" content="opencv入门4:图像算术-image arithmetic">
+<meta property="og:url" content="https://harveyyeung.github.io/2018/01/12/PracPythonOpenCV4-md/index.html">
 <meta property="og:site_name" content="Harvey`s note">
-<meta property="og:description" content="如opencv开发前的准备工作中所说,此系列文章是在学习Practical Python and OpenCV(点击下载)这本书的一些记录,发出来的文章跳过了第三章对RGB,以及numpy简单操作等介绍，请大家下载原书查看，在原书中对一下段落已进行翻译注释。文章系列完整展示代码点击下载  线和矩形画线drawing.py123456789101112131415161718192021222324">
+<meta property="og:description" content="RGB的像素值都在[0,255],如果我们想给一个250的像素再加十个像素会怎么样？ NumPy将执行模算术和“环绕”。比如250 再加10像素，会绕回到4，OpenCV 将执行剪切并确保像素值永远不会超出范围[0,255] NumPy will perform modulo arithmetic and “wrap around”.OpenCV, on the other hand, will">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://harveyyeung.github.io/images/PracPythonOpenCV2-1.png">
-<meta property="og:image" content="https://harveyyeung.github.io/images/PracPythonOpenCV2-2.png">
-<meta property="og:image" content="https://harveyyeung.github.io/images/PracPythonOpenCV2-3.png">
-<meta property="og:image" content="https://harveyyeung.github.io/images/PracPythonOpenCV2-4.png">
-<meta property="og:updated_time" content="2018-01-08T04:23:47.490Z">
+<meta property="og:image" content="https://harveyyeung.github.io/images/PracPythonOpenCV4-1.png">
+<meta property="og:image" content="https://harveyyeung.github.io/images/PracPythonOpenCV4-2.png">
+<meta property="og:updated_time" content="2018-01-12T03:50:01.650Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="opencv入门2:使用opencv简单画图">
-<meta name="twitter:description" content="如opencv开发前的准备工作中所说,此系列文章是在学习Practical Python and OpenCV(点击下载)这本书的一些记录,发出来的文章跳过了第三章对RGB,以及numpy简单操作等介绍，请大家下载原书查看，在原书中对一下段落已进行翻译注释。文章系列完整展示代码点击下载  线和矩形画线drawing.py123456789101112131415161718192021222324">
-<meta name="twitter:image" content="https://harveyyeung.github.io/images/PracPythonOpenCV2-1.png">
+<meta name="twitter:title" content="opencv入门4:图像算术-image arithmetic">
+<meta name="twitter:description" content="RGB的像素值都在[0,255],如果我们想给一个250的像素再加十个像素会怎么样？ NumPy将执行模算术和“环绕”。比如250 再加10像素，会绕回到4，OpenCV 将执行剪切并确保像素值永远不会超出范围[0,255] NumPy will perform modulo arithmetic and “wrap around”.OpenCV, on the other hand, will">
+<meta name="twitter:image" content="https://harveyyeung.github.io/images/PracPythonOpenCV4-1.png">
 
 
 
@@ -127,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="https://harveyyeung.github.io/2018/01/05/PracPythonOpenCV2/"/>
+  <link rel="canonical" href="https://harveyyeung.github.io/2018/01/12/PracPythonOpenCV4-md/"/>
 
 
 
 
 
-  <title>opencv入门2:使用opencv简单画图 | Harvey`s note</title>
+  <title>opencv入门4:图像算术-image arithmetic | Harvey`s note</title>
   
 
 
@@ -290,7 +288,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://harveyyeung.github.io/2018/01/05/PracPythonOpenCV2/">
+    <link itemprop="mainEntityOfPage" href="https://harveyyeung.github.io/2018/01/12/PracPythonOpenCV4-md/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Harvey">
@@ -307,7 +305,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">opencv入门2:使用opencv简单画图</h1>
+          <h1 class="post-title" itemprop="name headline">opencv入门4:图像算术-image arithmetic</h1>
         
 
         <div class="post-meta">
@@ -319,8 +317,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-05T15:23:38+08:00">
-                2018-01-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-12T11:39:06+08:00">
+                2018-01-12
               </time>
             
 
@@ -361,8 +359,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/01/05/PracPythonOpenCV2/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/01/05/PracPythonOpenCV2/" itemprop="commentsCount"></span>
+                <a href="/2018/01/12/PracPythonOpenCV4-md/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/01/12/PracPythonOpenCV4-md/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -371,7 +369,7 @@
 
           
           
-             <span id="/2018/01/05/PracPythonOpenCV2/" class="leancloud_visitors" data-flag-title="opencv入门2:使用opencv简单画图">
+             <span id="/2018/01/12/PracPythonOpenCV4-md/" class="leancloud_visitors" data-flag-title="opencv入门4:图像算术-image arithmetic">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -402,29 +400,15 @@
       
 
       
-        <blockquote>如opencv开发前的准备工作中所说,此系列文章是在学习<a href="https://jackmk.ctfile.com/fs/14155983-233384097" target="_blank" rel="noopener">Practical Python and OpenCV</a>(<a href="https://jackmk.ctfile.com/fs/14155983-233384097" target="_blank" rel="noopener">点击下载</a>)这本书的一些记录,发出来的文章跳过了第三章对RGB,以及numpy简单操作等介绍，请大家下载原书查看，在原书中对一下段落已进行翻译注释。文章系列完整展示代码<a href="https://jackmk.ctfile.com/fs/14155983-233412040" target="_blank" rel="noopener">点击下载</a></blockquote>
+        <p>RGB的像素值都在[0,255],如果我们想给一个250的像素再加十个像素会怎么样？</p>
+<p>NumPy将执行模算术和“环绕”。比如250 再加10像素，会绕回到4，<br>OpenCV 将执行剪切并确保像素值永远不会超出范围[0,255]</p>
+<blockquote><br>NumPy will perform modulo arithmetic and “wrap around”.<br>OpenCV, on the other hand, will perform clipping and ensure pixel values never fall outside the range [0, 255].<br></blockquote>
 
-<h3 id="线和矩形"><a href="#线和矩形" class="headerlink" title="线和矩形"></a>线和矩形</h3><figure class="highlight python"><figcaption><span>画线</span><a href="https://jackmk.ctfile.com/fs/14155983-233412040" target="_blank" rel="noopener">drawing.py</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line">canvas = np.zeros((<span class="number">300</span>, <span class="number">300</span>, <span class="number">3</span>), dtype = <span class="string">"uint8"</span>)</span><br><span class="line"><span class="comment">#使用np.zeros方法构造一个300，300，3通道的RGB的numpy array</span></span><br><span class="line"><span class="comment">#zeros方法用初始值为零填充数组中的每个元素。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#dtype 数据类型  8进制（</span></span><br><span class="line"><span class="comment">#Since we are representing our image as an RGB image with pixels in the range [0, 255], </span></span><br><span class="line"><span class="comment">#it’s important that we use an 8-bit unsigned integer, or uint8. There #are many </span></span><br><span class="line"><span class="comment">#other data types that we can use (common ones include 32-bit integers, and 32-bit </span></span><br><span class="line"><span class="comment">#or 64-bit floats), but we’ll mainly be using uint8 for the majority of the examples in this book）</span></span><br><span class="line"></span><br><span class="line">green = (<span class="number">0</span>,<span class="number">255</span>,<span class="number">0</span>)   <span class="comment">#定义一个表示绿色的BGR元组</span></span><br><span class="line">cv2.line(canvas,(<span class="number">0</span>,<span class="number">0</span>),(<span class="number">300</span>,<span class="number">300</span>),green) </span><br><span class="line"><span class="comment">#line(canvas.point1,point2,color) 画布，起点，终点，颜色</span></span><br><span class="line"> </span><br><span class="line">cv2.imshow(<span class="string">"Canvas"</span>, canvas)</span><br><span class="line">cv2.waitKey(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">red = (<span class="number">0</span>,<span class="number">0</span>,<span class="number">255</span>)</span><br><span class="line">cv2.line(canvas,(<span class="number">300</span>,<span class="number">0</span>),(<span class="number">0</span>,<span class="number">300</span>),red,<span class="number">3</span>)</span><br><span class="line"><span class="comment">#line(canvas.point1,point2,color，thickness) 画布，起点，终点，颜色，线条宽度pixels</span></span><br><span class="line"></span><br><span class="line">cv2.imshow(<span class="string">"Canvas"</span>,canvas)</span><br><span class="line">cv2.waitKey(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>  
-<p>运行结果如下:<br><img src="/images/PracPythonOpenCV2-1.png" width="200" height="300" title="图·1"></p>
-<figure class="highlight python"><figcaption><span>画矩形</span><a href="https://jackmk.ctfile.com/fs/14155983-233412040" target="_blank" rel="noopener">drawing.py</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">cv2.rectangle(canvas,(<span class="number">10</span>,<span class="number">10</span>),(<span class="number">60</span>,<span class="number">60</span>),green)</span><br><span class="line"><span class="comment">#rectangle(canvas,point1,point2,color)画布，起点，终点，颜色</span></span><br><span class="line">we are starting our rectangle at point (<span class="number">10</span>, <span class="number">10</span>)</span><br><span class="line">We decide to end our rectangle at(<span class="number">60</span>, <span class="number">60</span>), </span><br><span class="line">defining a region of <span class="number">50</span> x <span class="number">50</span> pixels</span><br><span class="line"></span><br><span class="line">cv2.imshow(<span class="string">"Canvas"</span>,canvas)</span><br><span class="line">cv2.waitKey(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">cv2.rectangle(canvas,(<span class="number">50</span>,<span class="number">200</span>),(<span class="number">200</span>,<span class="number">225</span>),red,<span class="number">5</span>)</span><br><span class="line"><span class="comment">#rectangle(canvas,point1,point2,color,thickness) 画布，起点，终点，颜色，线条宽度pixels</span></span><br><span class="line"></span><br><span class="line">cv2.imshow(<span class="string">"Canvas"</span>,canvas)</span><br><span class="line">cv2.waitKey(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>  
-<p>以上我们只绘制了一个矩形的轮廓，如何绘制一个填充满的矩形？<br>&emsp;&emsp;我们只需要通过设置厚度参数为：-1，如下<br><figure class="highlight python"><figcaption><span>填充矩形</span><a href="https://jackmk.ctfile.com/fs/14155983-233412040" target="_blank" rel="noopener">drawing.py</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">blue = (<span class="number">255</span>, <span class="number">0</span> , <span class="number">0</span>)</span><br><span class="line">cv2.rectangle(canvas,(<span class="number">200</span>,<span class="number">50</span>),(<span class="number">255</span>,<span class="number">125</span>),blue,<span class="number">-1</span>)</span><br><span class="line">cv2.imshow(<span class="string">"Canvas"</span>,canvas)</span><br><span class="line">cv2.waitKey(<span class="number">0</span>)</span><br></pre></td></tr></table></figure><br>运行结果如下:<br><img src="/images/PracPythonOpenCV2-2.png" width="200" height="300" title="图·2"></p>
-<h3 id="圆"><a href="#圆" class="headerlink" title="圆"></a>圆</h3><figure class="highlight python"><figcaption><span>画圆</span><a href="https://jackmk.ctfile.com/fs/14155983-233412040" target="_blank" rel="noopener">drawing.py</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">canvas = np.zeros((<span class="number">300</span>,<span class="number">300</span>,<span class="number">3</span>),dtype = <span class="string">"uint8"</span>)</span><br><span class="line">(centerX,centerY) = (canvas.shape[<span class="number">1</span>] // <span class="number">2</span> ,canvas.shape[<span class="number">0</span>] //<span class="number">2</span>)</span><br><span class="line"><span class="comment">#图像canvas的高度可以在canvas.shape [0]和canvas.shape [1]的宽度中找到。shape [2]为图像channels</span></span><br><span class="line">white = (<span class="number">255</span>,<span class="number">255</span>,<span class="number">255</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> r <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">175</span>,<span class="number">25</span>):</span><br><span class="line"><span class="comment"># range(start, stop[, step])</span></span><br><span class="line"><span class="comment"># 参数说明：</span></span><br><span class="line"><span class="comment"># start: 计数从 start 开始。默认是从 0 开始。例如range（5）等价于range（0， 5）;</span></span><br><span class="line"><span class="comment"># end: 计数到 end 结束，但不包括 end。例如：range（0， 5） 是[0, 1, 2, 3, 4]没有5</span></span><br><span class="line"><span class="comment"># step：步长，默认为1。例如：range（0， 5） 等价于 range(0, 5, 1)</span></span><br><span class="line">     cv2.circle(canvas,(centerX,centerY),r,white)</span><br><span class="line"><span class="comment"># cv2.circle(canvas,(centerX,centerY),radius,color,thickness) 画布，起点，终点，颜色，线条宽度(为-1时填充整个图像)</span></span><br></pre></td></tr></table></figure> 
-<p>运行结果如下:<br><img src="/images/PracPythonOpenCV2-3.png" width="200" height="300" title="图·3"></p>
-<p>画一个半径，中心点随机的填充多圆图<br><figure class="highlight python"><figcaption><span>画圆</span><a href="https://jackmk.ctfile.com/fs/14155983-233412040" target="_blank" rel="noopener">drawing.py</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, <span class="number">25</span>):</span><br><span class="line">    radius = np.random.randint(<span class="number">5</span>, high =<span class="number">200</span>)</span><br><span class="line"> 使用np.random.randint 生成一个<span class="number">5</span>到<span class="number">200</span>之间的随机数</span><br><span class="line">    color = np.random.randint(<span class="number">0</span>, high =<span class="number">256</span>,size=(<span class="number">3</span>,)).tolist()</span><br><span class="line">    pt = np.random.randint(<span class="number">0</span>, high=<span class="number">300</span>, size = (<span class="number">2</span>,))</span><br><span class="line">    cv2.circle(canvas,tuple(pt),radius,color,<span class="number">-1</span>)</span><br><span class="line">cv2.imshow(<span class="string">"Canvas"</span>,canvas)</span><br><span class="line">cv2.waitKey(<span class="number">0</span>)</span><br></pre></td></tr></table></figure><br>运行结果如下:<br><img src="/images/PracPythonOpenCV2-4.png" width="200" height="300" title="图·4"></p>
-<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">numpy.random.randint(low, high=None, size=None, dtype=<span class="string">'l'</span>)</span><br></pre></td></tr></table></figure>
-<div class="note "><p>Return random integers from low (inclusive) to high (exclusive).<br>Return random integers from the “discrete uniform” distribution of the specified dtype in the “half-open” interval [low, high). If high is None (the default), then results are from [0, low).</p></div>
-<p>Parameters:</p>
-<ul>
-<li>low : intLowest (signed) integer to be drawn from the distribution (unless high=None, in which case this parameter is one above the highest such integer).</li>
-<li>high : int, optionalIf provided, one above the largest (signed) integer to be drawn from the distribution (see above for behavior if high=None).</li>
-<li>size : int or tuple of ints, optionalOutput shape. If the given shape is, e.g., (m, n, k), then m <em> n </em> k samples are drawn. Default is None, in which case a single value is returned.</li>
-<li>dtype : dtype, optionalDesired dtype of the result. All dtypes are determined by their name, i.e., ‘int64’, ‘int’, etc, so byteorder is not available and a specific precision may have different C types depending on the platform. The default value is ‘np.int’.New in version 1.11.0.</li>
-</ul>
-<p>Returns: </p>
-<ul>
-<li>out : int or ndarray of intssize-shaped array of random integers from the appropriate distribution, or a single such random int if size not provided.</li>
-</ul>
-<blockquote class="blockquote-center" "荀子·修身"="">道虽迩，不行不至；事虽小，不为不成</blockquote>
+<figure class="highlight python"><figcaption><span>像素算术</span><a href="https://jackmk.ctfile.com/fs/14155983-233412040" target="_blank" rel="noopener">arithmetic.py</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np </span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"></span><br><span class="line">ap = argparse.ArgumentParser()</span><br><span class="line">ap.add_argument(<span class="string">"-i"</span>,<span class="string">"--image"</span>,required =<span class="keyword">True</span>, help=<span class="string">"Path to the image"</span>)</span><br><span class="line">args = vars(ap.parse_args())</span><br><span class="line"></span><br><span class="line">image = cv2.imread(args[<span class="string">"image"</span>])</span><br><span class="line">cv2.imshow(<span class="string">"Original"</span>,image)</span><br><span class="line"></span><br><span class="line">print(<span class="string">"max of 255:&#123;&#125;"</span>.format(cv2.add(np.uint8([<span class="number">200</span>]),np.uint8([<span class="number">100</span>]))))</span><br><span class="line">print(<span class="string">"min of 0:&#123;&#125;"</span>.format(cv2.subtract(np.uint8([<span class="number">50</span>]),np.uint8([<span class="number">100</span>]))))</span><br><span class="line"></span><br><span class="line">print(<span class="string">"wrap around :&#123;&#125;"</span>.format(np.uint8([<span class="number">200</span>])+np.uint8([<span class="number">100</span>])))</span><br><span class="line">print(<span class="string">"wrap around :&#123;&#125;"</span>.format(np.uint8([<span class="number">50</span>])-np.uint8([<span class="number">100</span>])))</span><br></pre></td></tr></table></figure>  
+<p>运行结果如下:<br><img src="/images/PracPythonOpenCV4-1.png" width="200" height="300" title="图·1"></p>
+<figure class="highlight python"><figcaption><span>像素算术</span><a href="https://jackmk.ctfile.com/fs/14155983-233412040" target="_blank" rel="noopener">arithmetic.py</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">M =np.ones(image.shape, dtype=<span class="string">"uint8"</span>)*<span class="number">100</span></span><br><span class="line"><span class="comment"># defines a NumPy array of ones, with the same</span></span><br><span class="line"><span class="comment"># size as our image.</span></span><br><span class="line"><span class="comment">#为了用100的值而不是1来填充我们的矩阵，我们简单地把1的矩阵乘以100。</span></span><br><span class="line">added = cv2.add(image,M)</span><br><span class="line">cv2.imshow(<span class="string">"Added"</span>,added)</span><br><span class="line"></span><br><span class="line">M = np.ones(image.shape,dtype =<span class="string">"uint8"</span>)*<span class="number">50</span></span><br><span class="line">subtracted = cv2.subtract(image,M)</span><br><span class="line">cv2.imshow(<span class="string">"Subtraced"</span>,subtracted)</span><br><span class="line">cv2.waitKey(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>  
+<img src="/images/PracPythonOpenCV4-2.png" width="200" height="300" title="图·2">
+<blockquote class="blockquote-center">一件事情的毕业，永远是另一件事情的开启.</blockquote>
       
     </div>
     
@@ -485,8 +469,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/01/05/PracPythonOpenCV1/" rel="next" title="opencv入门1:opencv开发前的准备工作">
-                <i class="fa fa-chevron-left"></i> opencv入门1:opencv开发前的准备工作
+              <a href="/2018/01/09/PracPythonOpenCV3/" rel="next" title="opencv入门3:图片操作-image transformations">
+                <i class="fa fa-chevron-left"></i> opencv入门3:图片操作-image transformations
               </a>
             
           </div>
@@ -494,10 +478,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/01/09/PracPythonOpenCV3/" rel="prev" title="opencv入门3:图片操作-image transformations">
-                opencv入门3:图片操作-image transformations <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -580,17 +560,8 @@ var jiathis_config={
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -661,22 +632,6 @@ var jiathis_config={
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#线和矩形"><span class="nav-number">1.</span> <span class="nav-text">线和矩形</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#圆"><span class="nav-number">2.</span> <span class="nav-text">圆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扩展"><span class="nav-number">3.</span> <span class="nav-text">扩展</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -866,7 +821,7 @@ var jiathis_config={
 		_hcwp.push({widget:"Bloggerstream", widget_id: 99649, selector:".hc-comment-count", label: "{\%COUNT%\}" });
 
 		
-		_hcwp.push({widget:"Stream", widget_id: 99649, xid: "2018/01/05/PracPythonOpenCV2/"});
+		_hcwp.push({widget:"Stream", widget_id: 99649, xid: "2018/01/12/PracPythonOpenCV4-md/"});
 		
 
 		(function() {

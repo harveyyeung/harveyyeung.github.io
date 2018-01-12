@@ -4,8 +4,30 @@
 
     
   <url>
+    <loc>https://harveyyeung.github.io/2018/01/12/PracPythonOpenCV4-md/</loc>
+    <lastmod>2018-01-12T03:50:01.650Z</lastmod>
+    <data>
+        <display>
+        <title>opencv入门4:图像算术-image arithmetic</title>
+        <pubTime>2018-01-12T03:39:06.000Z</pubTime>
+        
+        <tag>opencv</tag>
+         
+        <tag>python</tag>
+         
+         
+           
+             
+              <breadCrumb title="opencv" url="https://harveyyeung.github.io/categories/opencv/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://harveyyeung.github.io/2018/01/09/PracPythonOpenCV3/</loc>
-    <lastmod>2018-01-09T09:57:54.106Z</lastmod>
+    <lastmod>2018-01-10T03:01:26.465Z</lastmod>
     <data>
         <display>
         <title>opencv入门3:图片操作-image transformations</title>
