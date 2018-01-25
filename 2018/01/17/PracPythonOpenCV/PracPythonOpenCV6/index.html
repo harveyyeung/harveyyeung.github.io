@@ -81,21 +81,21 @@
 
 
 
-<meta name="description" content="RGB的像素值都在[0,255],如果我们想给一个250的像素再加十个像素会怎么样？ NumPy将执行模算术和“环绕”。比如250 再加10像素，会绕回到4，OpenCV 将执行剪切并确保像素值永远不会超出范围[0,255] NumPy will perform modulo arithmetic and “wrap around”.OpenCV, on the other hand, will">
+<meta name="description" content="使用蒙板可以让我们只关注感兴趣的图像部分。掩码的关键点是它们允许我们将计算的重点仅限于感兴趣的图像区域. 详细解释：https://docs.opencv.org/3.0-beta/modules/core/doc/operations_on_arrays.html?highlight=bitwise_and#cv2.bitwise_and蒙板masking.py12345678910111213">
 <meta name="keywords" content="opencv,python">
 <meta property="og:type" content="article">
-<meta property="og:title" content="opencv入门4:图像算术-image arithmetic">
-<meta property="og:url" content="https://harveyyeung.github.io/2018/01/12/PracPythonOpenCV4/index.html">
+<meta property="og:title" content="opencv入门6:蒙版-masking">
+<meta property="og:url" content="https://harveyyeung.github.io/2018/01/17/PracPythonOpenCV/PracPythonOpenCV6/index.html">
 <meta property="og:site_name" content="Harvey`s note">
-<meta property="og:description" content="RGB的像素值都在[0,255],如果我们想给一个250的像素再加十个像素会怎么样？ NumPy将执行模算术和“环绕”。比如250 再加10像素，会绕回到4，OpenCV 将执行剪切并确保像素值永远不会超出范围[0,255] NumPy will perform modulo arithmetic and “wrap around”.OpenCV, on the other hand, will">
+<meta property="og:description" content="使用蒙板可以让我们只关注感兴趣的图像部分。掩码的关键点是它们允许我们将计算的重点仅限于感兴趣的图像区域. 详细解释：https://docs.opencv.org/3.0-beta/modules/core/doc/operations_on_arrays.html?highlight=bitwise_and#cv2.bitwise_and蒙板masking.py12345678910111213">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://harveyyeung.github.io/images/PracPythonOpenCV4-1.png">
-<meta property="og:image" content="https://harveyyeung.github.io/images/PracPythonOpenCV4-2.png">
-<meta property="og:updated_time" content="2018-01-12T03:54:28.561Z">
+<meta property="og:image" content="https://harveyyeung.github.io/images/PracPythonOpenCV6-1.png">
+<meta property="og:image" content="https://harveyyeung.github.io/images/PracPythonOpenCV6-2.png">
+<meta property="og:updated_time" content="2018-01-25T03:03:58.212Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="opencv入门4:图像算术-image arithmetic">
-<meta name="twitter:description" content="RGB的像素值都在[0,255],如果我们想给一个250的像素再加十个像素会怎么样？ NumPy将执行模算术和“环绕”。比如250 再加10像素，会绕回到4，OpenCV 将执行剪切并确保像素值永远不会超出范围[0,255] NumPy will perform modulo arithmetic and “wrap around”.OpenCV, on the other hand, will">
-<meta name="twitter:image" content="https://harveyyeung.github.io/images/PracPythonOpenCV4-1.png">
+<meta name="twitter:title" content="opencv入门6:蒙版-masking">
+<meta name="twitter:description" content="使用蒙板可以让我们只关注感兴趣的图像部分。掩码的关键点是它们允许我们将计算的重点仅限于感兴趣的图像区域. 详细解释：https://docs.opencv.org/3.0-beta/modules/core/doc/operations_on_arrays.html?highlight=bitwise_and#cv2.bitwise_and蒙板masking.py12345678910111213">
+<meta name="twitter:image" content="https://harveyyeung.github.io/images/PracPythonOpenCV6-1.png">
 
 
 
@@ -125,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="https://harveyyeung.github.io/2018/01/12/PracPythonOpenCV4/"/>
+  <link rel="canonical" href="https://harveyyeung.github.io/2018/01/17/PracPythonOpenCV/PracPythonOpenCV6/"/>
 
 
 
 
 
-  <title>opencv入门4:图像算术-image arithmetic | Harvey`s note</title>
+  <title>opencv入门6:蒙版-masking | Harvey`s note</title>
   
 
 
@@ -288,7 +288,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://harveyyeung.github.io/2018/01/12/PracPythonOpenCV4/">
+    <link itemprop="mainEntityOfPage" href="https://harveyyeung.github.io/2018/01/17/PracPythonOpenCV/PracPythonOpenCV6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Harvey">
@@ -305,7 +305,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">opencv入门4:图像算术-image arithmetic</h1>
+          <h1 class="post-title" itemprop="name headline">opencv入门6:蒙版-masking</h1>
         
 
         <div class="post-meta">
@@ -317,8 +317,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-12T11:39:06+08:00">
-                2018-01-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-17T12:10:16+08:00">
+                2018-01-17
               </time>
             
 
@@ -359,8 +359,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/01/12/PracPythonOpenCV4/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/01/12/PracPythonOpenCV4/" itemprop="commentsCount"></span>
+                <a href="/2018/01/17/PracPythonOpenCV/PracPythonOpenCV6/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/01/17/PracPythonOpenCV/PracPythonOpenCV6/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -369,7 +369,7 @@
 
           
           
-             <span id="/2018/01/12/PracPythonOpenCV4/" class="leancloud_visitors" data-flag-title="opencv入门4:图像算术-image arithmetic">
+             <span id="/2018/01/17/PracPythonOpenCV/PracPythonOpenCV6/" class="leancloud_visitors" data-flag-title="opencv入门6:蒙版-masking">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -400,15 +400,9 @@
       
 
       
-        <p>RGB的像素值都在[0,255],如果我们想给一个250的像素再加十个像素会怎么样？</p>
-<p>NumPy将执行模算术和“环绕”。比如250 再加10像素，会绕回到4，<br>OpenCV 将执行剪切并确保像素值永远不会超出范围[0,255]</p>
-<blockquote><br>NumPy will perform modulo arithmetic and “wrap around”.<br>OpenCV, on the other hand, will perform clipping and ensure pixel values never fall outside the range [0, 255].<br></blockquote>
-
-<figure class="highlight python"><figcaption><span>像素算术</span><a href="https://jackmk.ctfile.com/fs/14155983-233412040" target="_blank" rel="noopener">arithmetic.py</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np </span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"></span><br><span class="line">ap = argparse.ArgumentParser()</span><br><span class="line">ap.add_argument(<span class="string">"-i"</span>,<span class="string">"--image"</span>,required =<span class="keyword">True</span>, help=<span class="string">"Path to the image"</span>)</span><br><span class="line">args = vars(ap.parse_args())</span><br><span class="line"></span><br><span class="line">image = cv2.imread(args[<span class="string">"image"</span>])</span><br><span class="line">cv2.imshow(<span class="string">"Original"</span>,image)</span><br><span class="line"></span><br><span class="line">print(<span class="string">"max of 255:&#123;&#125;"</span>.format(cv2.add(np.uint8([<span class="number">200</span>]),np.uint8([<span class="number">100</span>]))))</span><br><span class="line">print(<span class="string">"min of 0:&#123;&#125;"</span>.format(cv2.subtract(np.uint8([<span class="number">50</span>]),np.uint8([<span class="number">100</span>]))))</span><br><span class="line"></span><br><span class="line">print(<span class="string">"wrap around :&#123;&#125;"</span>.format(np.uint8([<span class="number">200</span>])+np.uint8([<span class="number">100</span>])))</span><br><span class="line">print(<span class="string">"wrap around :&#123;&#125;"</span>.format(np.uint8([<span class="number">50</span>])-np.uint8([<span class="number">100</span>])))</span><br></pre></td></tr></table></figure>  
-<p>运行结果如下:<br><img src="/images/PracPythonOpenCV4-1.png" width="200" height="300" title="图·1"></p>
-<figure class="highlight python"><figcaption><span>像素算术</span><a href="https://jackmk.ctfile.com/fs/14155983-233412040" target="_blank" rel="noopener">arithmetic.py</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">M =np.ones(image.shape, dtype=<span class="string">"uint8"</span>)*<span class="number">100</span></span><br><span class="line"><span class="comment"># defines a NumPy array of ones, with the same</span></span><br><span class="line"><span class="comment"># size as our image.</span></span><br><span class="line"><span class="comment">#为了用100的值而不是1来填充我们的矩阵，我们简单地把1的矩阵乘以100。</span></span><br><span class="line">added = cv2.add(image,M)</span><br><span class="line">cv2.imshow(<span class="string">"Added"</span>,added)</span><br><span class="line"></span><br><span class="line">M = np.ones(image.shape,dtype =<span class="string">"uint8"</span>)*<span class="number">50</span></span><br><span class="line">subtracted = cv2.subtract(image,M)</span><br><span class="line">cv2.imshow(<span class="string">"Subtraced"</span>,subtracted)</span><br><span class="line">cv2.waitKey(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>  
-<img src="/images/PracPythonOpenCV4-2.png" width="200" height="300" title="图·2">
-<blockquote class="blockquote-center">一件事情的毕业，永远是另一件事情的开启.</blockquote>
+        <p>使用蒙板可以让我们只关注感兴趣的图像部分。<br>掩码的关键点是它们允许我们将计算的重点仅限于感兴趣的图像区域.<br><img src="/images/PracPythonOpenCV6-1.png" width="200" height="300" title="图·1"><br><img src="/images/PracPythonOpenCV6-2.png" width="200" height="300" title="图·2"></p>
+<blockquote>详细解释：<br><a href="https://docs.opencv.org/3.0-beta/modules/core/doc/operations_on_arrays.html?
+highlight=bitwise_and#cv2.bitwise_and" target="_blank" rel="noopener">https://docs.opencv.org/3.0-beta/modules/core/doc/operations_on_arrays.html?<br>highlight=bitwise_and#cv2.bitwise_and</a><br></blockquote><br><figure class="highlight python"><figcaption><span>蒙板</span><a href="https://jackmk.ctfile.com/fs/14155983-233412040" target="_blank" rel="noopener">masking.py</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np </span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"></span><br><span class="line">ap = argparse.ArgumentParser()</span><br><span class="line">ap.add_argument(<span class="string">"-i"</span>,<span class="string">"--image"</span>,required =<span class="keyword">True</span>, help=<span class="string">"Path to the image"</span>)</span><br><span class="line">args = vars(ap.parse_args())</span><br><span class="line"></span><br><span class="line">image = cv2.imread(args[<span class="string">"image"</span>])</span><br><span class="line">cv2.imshow(<span class="string">"Original"</span>,image)</span><br><span class="line"></span><br><span class="line">mask = np.zeros(image.shape[:<span class="number">2</span>],dtype =<span class="string">"uint8"</span>)</span><br><span class="line">(cx,cy) = (image.shape[<span class="number">1</span>]//<span class="number">2</span>,image.shape[<span class="number">0</span>]//<span class="number">2</span>)</span><br><span class="line">cv2.rectangle(mask,(cx<span class="number">-250</span>,cy<span class="number">-150</span>),(cx+<span class="number">200</span> ,cy+<span class="number">150</span>),<span class="number">255</span>,<span class="number">-1</span>)</span><br><span class="line">cv2.imshow(<span class="string">"Mask"</span>,mask)</span><br><span class="line"></span><br><span class="line">masked = cv2.bitwise_and(image,image,mask=mask)</span><br><span class="line"><span class="comment">#bitwise_and方法前两个参数是图像本身</span></span><br><span class="line">掩码只考虑掩码大于零的原始图像中的像素</span><br><span class="line">cv2.imshow(<span class="string">"Mask applied to image"</span>,masked)</span><br><span class="line">cv2.waitKey(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mask = np.zeros(image.shape[:<span class="number">2</span>], dtype = <span class="string">"uint8"</span>)</span><br><span class="line">cv2.circle(mask, (cx, cy), <span class="number">100</span>, <span class="number">255</span>, <span class="number">-1</span>)</span><br><span class="line">masked = cv2.bitwise_and(image, image, mask = mask)</span><br><span class="line">cv2.imshow(<span class="string">"Mask"</span>, mask)</span><br><span class="line">cv2.imshow(<span class="string">"Mask Applied to Image"</span>, masked)</span><br><span class="line">cv2.waitKey(<span class="number">0</span>)</span><br></pre></td></tr></table></figure><br><br><br><blockquote class="blockquote-center">现实不似你所见。</blockquote>
       
     </div>
     
@@ -469,8 +463,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/01/09/PracPythonOpenCV3/" rel="next" title="opencv入门3:图片操作-image transformations">
-                <i class="fa fa-chevron-left"></i> opencv入门3:图片操作-image transformations
+              <a href="/2018/01/15/PracPythonOpenCV/PracPythonOpenCV5/" rel="next" title="opencv入门5:按位操作-bitwise operations">
+                <i class="fa fa-chevron-left"></i> opencv入门5:按位操作-bitwise operations
               </a>
             
           </div>
@@ -479,8 +473,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/01/15/PracPythonOpenCV5/" rel="prev" title="opencv入门5:按位操作-bitwise operations">
-                opencv入门5:按位操作-bitwise operations <i class="fa fa-chevron-right"></i>
+              <a href="/2018/01/25/PracPythonOpenCV/PracPythonOpenCV7/" rel="prev" title="opencv入门7：拆分和合并渠道-splitting and merging channels">
+                opencv入门7：拆分和合并渠道-splitting and merging channels <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -584,7 +578,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -843,7 +837,7 @@ var jiathis_config={
 		_hcwp.push({widget:"Bloggerstream", widget_id: 99649, selector:".hc-comment-count", label: "{\%COUNT%\}" });
 
 		
-		_hcwp.push({widget:"Stream", widget_id: 99649, xid: "2018/01/12/PracPythonOpenCV4/"});
+		_hcwp.push({widget:"Stream", widget_id: 99649, xid: "2018/01/17/PracPythonOpenCV/PracPythonOpenCV6/"});
 		
 
 		(function() {
