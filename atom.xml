@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://harveyyeung.github.io/"/>
-  <updated>2018-01-25T03:16:48.262Z</updated>
+  <updated>2018-01-29T03:13:57.271Z</updated>
   <id>https://harveyyeung.github.io/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>opencv入门8.色彩空间-color spaces</title>
+    <link href="https://harveyyeung.github.io/2018/01/29/PracPythonOpenCV/PracPythonOpenCV8/"/>
+    <id>https://harveyyeung.github.io/2018/01/29/PracPythonOpenCV/PracPythonOpenCV8/</id>
+    <published>2018-01-29T03:06:03.000Z</published>
+    <updated>2018-01-29T03:13:57.271Z</updated>
+    
+    <content type="html"><![CDATA[<p>我们只探索了RGB色彩空间;然而，还有很多其他的色彩空间可以利用</p><p>色调 - 饱和度值（HSV：Hue-Saturation-Value）色彩空间与人类如何思考和设想色彩更相似。</p><p>然后是 L <em> a </em> b * 色彩空间.</p><p>为了不陷入细节，我会告诉你如何转换色彩空间。如果您认为您的图像处理和计算机视觉应用可能需要与RGB不同的色彩空间，那么我将作为练习留给读者去探索每个色彩空间的特性。</p><blockquote><br>cv2.cvtColor(image, cv2.COLOR_BGR2HSV)<br><a href="https://docs.opencv.org/3.0-beta/modules/imgproc/doc/miscellaneous_transformations.html?highlight=cvtcolor#cv2.cvtColor" target="_blank" rel="noopener">https://docs.opencv.org/3.0-beta/modules/imgproc/doc/miscellaneous_transformations.html?highlight=cvtcolor#cv2.cvtColor</a><br></blockquote><figure class="highlight python"><figcaption><span>色彩空间</span><a href="https://jackmk.ctfile.com/fs/14155983-233412040" target="_blank" rel="noopener">colorspaces.py</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np </span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"></span><br><span class="line">ap = argparse.ArgumentParser()</span><br><span class="line">ap.add_argument(<span class="string">"-i"</span>,<span class="string">"--image"</span>,required = <span class="keyword">True</span>,help = <span class="string">"Path to the image"</span>)</span><br><span class="line">args = vars(ap.parse_args())</span><br><span class="line"></span><br><span class="line">image = cv2.imread(args[<span class="string">"image"</span>])</span><br><span class="line">cv2.imshow(<span class="string">"Original"</span>,image)</span><br><span class="line"></span><br><span class="line">gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)</span><br><span class="line">cv2.imshow(<span class="string">"Gray"</span>,gray)</span><br><span class="line"><span class="comment"># 我们通过指定cv2.COLOR_BGR2GRAY标志将我们的图像从RGB颜色空间转换为灰度</span></span><br><span class="line"></span><br><span class="line">hsv = cv2.cvtColor(image,cv2.COLOR_BGR2HSV)</span><br><span class="line">cv2.imshow(<span class="string">"HSV"</span>,hsv)</span><br><span class="line"></span><br><span class="line">lab = cv2.cvtColor(image,cv2.COLOR_BGR2LAB)</span><br><span class="line">cv2.imshow(<span class="string">"L*a*b*"</span>,lab)</span><br><span class="line">cv2.waitKey(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>  <img src="/images/PracPythonOpenCV8-1.png" width="200" height="300" title="图·1"><blockquote class="blockquote-center">简单是可靠的先决条件.</blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;我们只探索了RGB色彩空间;然而，还有很多其他的色彩空间可以利用&lt;/p&gt;
+&lt;p&gt;色调 - 饱和度值（HSV：Hue-Saturation-Value）色彩空间与人类如何思考和设想色彩更相似。&lt;/p&gt;
+&lt;p&gt;然后是 L &lt;em&gt; a &lt;/em&gt; b * 色彩空间.&lt;/p&gt;
+&lt;
+      
+    
+    </summary>
+    
+      <category term="opencv" scheme="https://harveyyeung.github.io/categories/opencv/"/>
+    
+    
+      <category term="opencv" scheme="https://harveyyeung.github.io/tags/opencv/"/>
+    
+      <category term="python" scheme="https://harveyyeung.github.io/tags/python/"/>
+    
+  </entry>
   
   <entry>
     <title>opencv入门7：拆分和合并渠道-splitting and merging channels</title>
