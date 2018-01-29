@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="opencv,python," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Harvey`s note" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="什么是直方图呢？通过直方图你可以对整幅图像的灰度分布有一个整体的了解。直方图的x 轴是灰度值（0 到255），y 轴是图片中具有同一个灰度值的点的数目。 直方图其实就是对图像的另一种解释。一下图为例，通过直方图我们可以对图像的对比度，亮度，灰度分布等有一个直观的认识。几乎所有的图像处理软件都提供了直方图分析功能。下图来自Cambridge in Color website，强烈推荐你到这个网站了解">
+<meta name="keywords" content="opencv,python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="opencv入门9:直方图-histogram">
+<meta property="og:url" content="https://harveyyeung.github.io/2018/01/29/PracPythonOpenCV/PracPythonOpenCV9/index.html">
+<meta property="og:site_name" content="Harvey`s note">
+<meta property="og:description" content="什么是直方图呢？通过直方图你可以对整幅图像的灰度分布有一个整体的了解。直方图的x 轴是灰度值（0 到255），y 轴是图片中具有同一个灰度值的点的数目。 直方图其实就是对图像的另一种解释。一下图为例，通过直方图我们可以对图像的对比度，亮度，灰度分布等有一个直观的认识。几乎所有的图像处理软件都提供了直方图分析功能。下图来自Cambridge in Color website，强烈推荐你到这个网站了解">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://harveyyeung.github.io/images/PracPythonOpenCV9-1.png">
+<meta property="og:image" content="https://harveyyeung.github.io/images/PracPythonOpenCV9-2.png">
+<meta property="og:image" content="https://harveyyeung.github.io/images/PracPythonOpenCV9-3.png">
+<meta property="og:image" content="https://harveyyeung.github.io/images/PracPythonOpenCV9-4.png">
+<meta property="og:image" content="https://harveyyeung.github.io/images/PracPythonOpenCV9-5.png">
+<meta property="og:image" content="https://harveyyeung.github.io/images/PracPythonOpenCV9-6.png">
+<meta property="og:updated_time" content="2018-01-29T03:36:29.408Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="opencv入门9:直方图-histogram">
+<meta name="twitter:description" content="什么是直方图呢？通过直方图你可以对整幅图像的灰度分布有一个整体的了解。直方图的x 轴是灰度值（0 到255），y 轴是图片中具有同一个灰度值的点的数目。 直方图其实就是对图像的另一种解释。一下图为例，通过直方图我们可以对图像的对比度，亮度，灰度分布等有一个直观的认识。几乎所有的图像处理软件都提供了直方图分析功能。下图来自Cambridge in Color website，强烈推荐你到这个网站了解">
+<meta name="twitter:image" content="https://harveyyeung.github.io/images/PracPythonOpenCV9-1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://harveyyeung.github.io/2018/01/29/PracPythonOpenCV/PracPythonOpenCV9/"/>
+
+
+
+
+
+  <title>opencv入门9:直方图-histogram | Harvey`s note</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7fbcdec62427b3cceb1e64dce6367af4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Harvey`s note</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">专注当前的任务，控制支出</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://harveyyeung.github.io/2018/01/29/PracPythonOpenCV/PracPythonOpenCV9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Harvey">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/icon2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Harvey`s note">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">opencv入门9:直方图-histogram</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-29T11:18:07+08:00">
+                2018-01-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/opencv/" itemprop="url" rel="index">
+                    <span itemprop="name">opencv</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/01/29/PracPythonOpenCV/PracPythonOpenCV9/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/01/29/PracPythonOpenCV/PracPythonOpenCV9/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+             <span id="/2018/01/29/PracPythonOpenCV/PracPythonOpenCV9/" class="leancloud_visitors" data-flag-title="opencv入门9:直方图-histogram">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>什么是直方图呢？通过直方图你可以对整幅图像的灰度分布有一个整体的了解。直方图的x 轴是灰度值（0 到255），y 轴是图片中具有同一个灰度值的点的数目。</p>
+<p>直方图其实就是对图像的另一种解释。一下图为例，通过直方图我们可以对图像的对比度，亮度，灰度分布等有一个直观的认识。几乎所有的图像处理软件都提供了直方图分析功能。下图来自Cambridge in Color website，强烈推荐你到这个网站了解更多知识。<br><img src="/images/PracPythonOpenCV9-1.png" width="400" height="400" title="图·1"></p>
+<p>让我们来一起看看这幅图片和它的直方图吧。（要记住，直方图是根据灰度图像绘制的，而不是彩色图像）。直方图的左边区域像是了暗一点的像素数量，右侧显示了亮一点的像素的数量。从这幅图上你可以看到灰暗的区域比两的区域要大，而处于中间部分的像素点很少。</p>
+<h3 id="一、使用opencv计算直方图"><a href="#一、使用opencv计算直方图" class="headerlink" title="一、使用opencv计算直方图"></a>一、使用opencv计算直方图</h3><blockquote><br> 方法：cv2.calcHist(images,channels,mask,histSize,ranges)<br>1. images: 原图像（图像格式为uint8 或float32）。当传入函数时应该<br>用中括号[] 括起来，例如：[img]。<br>2. channels: 同样需要用中括号括起来，它会告诉函数我们要统计那幅图<br>像的直方图。如果输入图像是灰度图，它的值就是[0]；如果是彩色图像<br>的话，传入的参数可以是[0]，[1]，[2] 它们分别对应着通道B，G，R。<br>3. mask: 掩模图像。要统计整幅图像的直方图就把它设为None。但是如<br>果你想统计图像某一部分的直方图的话，你就需要制作一个掩模图像，并<br>使用它。（后边有例子）<br>4. histSize:BIN 的数目。也应该用中括号括起来，例如：[256]。<br>5. ranges: 像素值范围，通常为[0，256]<br></blockquote>
+
+<p>BINS：上面的直方图显示了每个灰度值对应的像素数。如果像素值为0到255，你就需要256 个数来显示上面的直方图。但是，如果你不需要知道<br>每一个像素值的像素点数目的，而只希望知道两个像素值之间的像素点数目怎么办呢？举例来说，我们想知道像素值在0 到15 之间的像素点的数目，接着<br>是16 到31,….，240 到255。我们只需要16 个值来绘制直方图。OpenCV Tutorials on histograms中例子所演示的内容。<br>那到底怎么做呢？你只需要把原来的256 个值等分成16 小组，取每组的总和。而这里的每一个小组就被成为BIN。第一个例子中有256 个BIN，第二个例子中有16 个BIN。在OpenCV 的文档中用histSize 表示BINS。</p>
+<p>DIMS：表示我们收集数据的参数数目。在本例中，我们对收集到的数据只考虑一件事：灰度值。所以这里就是1。RANGE：就是要统计的灰度值范围，一般来说为[0，256]，也就是说所有的灰度值</p>
+<figure class="highlight python"><figcaption><span>直方图</span><a href="https://jackmk.ctfile.com/fs/14155983-233412040" target="_blank" rel="noopener">grayscale_histogram.py</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np </span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">ap = argparse.ArgumentParser()</span><br><span class="line">ap.add_argument(<span class="string">"-i"</span>,<span class="string">"--image"</span>,required = <span class="keyword">True</span>,help = <span class="string">"Path to the image"</span>)</span><br><span class="line">args = vars(ap.parse_args())</span><br><span class="line"></span><br><span class="line">image = cv2.imread(args[<span class="string">"image"</span>])</span><br><span class="line"></span><br><span class="line">image = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)</span><br><span class="line">cv2.imshow(<span class="string">"Original"</span>,image)</span><br><span class="line"></span><br><span class="line">hist = cv2.calcHist([image],[<span class="number">0</span>],<span class="keyword">None</span>,[<span class="number">256</span>],[<span class="number">0</span>,<span class="number">256</span>])</span><br><span class="line"></span><br><span class="line">plt.figure()</span><br><span class="line">plt.title(<span class="string">"Grayscale Histogram"</span>)</span><br><span class="line">plt.xlabel(<span class="string">"Bins"</span>)</span><br><span class="line">plt.ylabel(<span class="string">"# of Pixels"</span>)</span><br><span class="line">plt.plot(hist)</span><br><span class="line">plt.xlim([<span class="number">0</span>,<span class="number">256</span>])</span><br><span class="line">plt.show()</span><br><span class="line">cv2.waitKey(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>  
+<img src="/images/PracPythonOpenCV9-2.png" width="400" height="400" title="图·2">
+<figure class="highlight python"><figcaption><span>直方图</span><a href="https://jackmk.ctfile.com/fs/14155983-233412040" target="_blank" rel="noopener">color_histograms.py</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np </span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line">ap = argparse.ArgumentParser()</span><br><span class="line">ap.add_argument(<span class="string">"-i"</span>,<span class="string">"--image"</span>,required = <span class="keyword">True</span>,help = <span class="string">"Path to the image"</span>)</span><br><span class="line">args = vars(ap.parse_args())</span><br><span class="line"></span><br><span class="line">image = cv2.imread(args[<span class="string">"image"</span>])</span><br><span class="line"></span><br><span class="line">chans = cv2.split(image)</span><br><span class="line">colors = (<span class="string">"b"</span>,<span class="string">"g"</span>,<span class="string">"r"</span>)</span><br><span class="line"></span><br><span class="line">plt.figure()</span><br><span class="line">plt.title(<span class="string">"Grayscale Histogram"</span>)</span><br><span class="line">plt.xlabel(<span class="string">"Bins"</span>)</span><br><span class="line">plt.ylabel(<span class="string">"# of Pixels"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (chan,color) <span class="keyword">in</span> zip(chans,colors):</span><br><span class="line">    hist = cv2.calcHist([chan],[<span class="number">0</span>],<span class="keyword">None</span>,[<span class="number">256</span>],[<span class="number">0</span>,<span class="number">256</span>])</span><br><span class="line">    plt.plot(hist,color = color)</span><br><span class="line">    plt.xlim([<span class="number">0</span>,<span class="number">256</span>])</span><br><span class="line"></span><br><span class="line">plt.show()</span><br><span class="line">cv2.waitKey(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>  
+<img src="/images/PracPythonOpenCV9-3.png" width="400" height="400" title="图·3">
+<figure class="highlight python"><figcaption><span>直方图</span><a href="https://jackmk.ctfile.com/fs/14155983-233412040" target="_blank" rel="noopener">color_histograms2.py</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np </span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line">ap = argparse.ArgumentParser()</span><br><span class="line">ap.add_argument(<span class="string">"-i"</span>,<span class="string">"--image"</span>,required = <span class="keyword">True</span>,help = <span class="string">"Path to the image"</span>)</span><br><span class="line">args = vars(ap.parse_args())</span><br><span class="line"></span><br><span class="line">image = cv2.imread(args[<span class="string">"image"</span>])</span><br><span class="line"></span><br><span class="line">chans = cv2.split(image)</span><br><span class="line">colors = (<span class="string">"b"</span>,<span class="string">"g"</span>,<span class="string">"r"</span>)</span><br><span class="line"></span><br><span class="line">fig=plt.figure()</span><br><span class="line"></span><br><span class="line">ax = fig.add_subplot(<span class="number">131</span>)</span><br><span class="line">hist= cv2.calcHist([chans[<span class="number">1</span>],chans[<span class="number">0</span>]],[<span class="number">0</span>,<span class="number">1</span>],<span class="keyword">None</span>,[<span class="number">32</span>,<span class="number">32</span>],[<span class="number">0</span>,<span class="number">256</span>,<span class="number">0</span>,<span class="number">256</span>])</span><br><span class="line">p = ax.imshow(hist,interpolation = <span class="string">"nearest"</span>)</span><br><span class="line">ax.set_title(<span class="string">"2D color Historgram for G and B"</span>)</span><br><span class="line">plt.colorbar(p)</span><br><span class="line"></span><br><span class="line">ax = fig.add_subplot(<span class="number">132</span>)</span><br><span class="line">hist= cv2.calcHist([chans[<span class="number">1</span>],chans[<span class="number">2</span>]],[<span class="number">0</span>,<span class="number">1</span>],<span class="keyword">None</span>,[<span class="number">32</span>,<span class="number">32</span>],[<span class="number">0</span>,<span class="number">256</span>,<span class="number">0</span>,<span class="number">256</span>])</span><br><span class="line">p = ax.imshow(hist,interpolation = <span class="string">"nearest"</span>)</span><br><span class="line">ax.set_title(<span class="string">"2D color Historgram for G and R"</span>)</span><br><span class="line">plt.colorbar(p)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ax = fig.add_subplot(<span class="number">133</span>)</span><br><span class="line">hist= cv2.calcHist([chans[<span class="number">0</span>],chans[<span class="number">2</span>]],[<span class="number">0</span>,<span class="number">1</span>],<span class="keyword">None</span>,[<span class="number">32</span>,<span class="number">32</span>],[<span class="number">0</span>,<span class="number">256</span>,<span class="number">0</span>,<span class="number">256</span>])</span><br><span class="line">p = ax.imshow(hist,interpolation = <span class="string">"nearest"</span>)</span><br><span class="line">ax.set_title(<span class="string">"2D color Historgram for B and R"</span>)</span><br><span class="line">plt.colorbar(p)</span><br><span class="line"></span><br><span class="line">plt.show()</span><br><span class="line">print(<span class="string">"2D histogram shape:&#123;&#125;,with &#123;&#125; values"</span>.format(hist.shape,hist.flatten().shape[<span class="number">0</span>]))</span><br></pre></td></tr></table></figure>  
+<blockquote><br>为了同时在一个窗口中显示多个图像，我们使用函数plt.subplot()。你<br>可以通过查看Matplotlib 的文档获得更多详细信息<br></blockquote>
+
+<p>蓝色阴影表示低像素计数，而红色阴影表示大像素计数（即，2D图形中的峰值）</p>
+<img src="/images/PracPythonOpenCV9-4.png" width="400" height="400" title="图·4">
+<h3 id="二、直方图均衡化-histogram-equalization"><a href="#二、直方图均衡化-histogram-equalization" class="headerlink" title="二、直方图均衡化 -histogram equalization"></a>二、直方图均衡化 -histogram equalization</h3><p>直方图均衡通过“拉伸”像素的分布来改善图像的对比度。<br>应用直方图均衡会将峰值拉向图像的角落，从而改善图像的全局对比度。直方图均衡适用于灰度图像</p>
+<img src="/images/PracPythonOpenCV9-5.png" width="400" height="400" title="图·5">
+<p>执行直方图均衡仅使用单个函数完成：cv2.equalizeHist（image）它接受一个单一的参数，灰度图像，我们要执行直方图均衡。</p>
+<figure class="highlight python"><figcaption><span>直方图</span><a href="https://jackmk.ctfile.com/fs/14155983-233412040" target="_blank" rel="noopener">histogram_with_mask.py</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np </span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"></span><br><span class="line">ap = argparse.ArgumentParser()</span><br><span class="line">ap.add_argument(<span class="string">"-i"</span>,<span class="string">"--image"</span>,required = <span class="keyword">True</span>,help = <span class="string">"Path to the image"</span>)</span><br><span class="line">args = vars(ap.parse_args())</span><br><span class="line"></span><br><span class="line">image = cv2.imread(args[<span class="string">"image"</span>])</span><br><span class="line">image = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)</span><br><span class="line"></span><br><span class="line">eq = cv2.equalizeHist(image)</span><br><span class="line"></span><br><span class="line">cv2.imshow(<span class="string">"Histogram Equalization"</span>,np.vstack([image,eq]))</span><br><span class="line"><span class="comment">#hstack  横向堆叠图像   vstack纵向</span></span><br><span class="line">cv2.waitKey(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>  
+<h3 id="三、使用掩模"><a href="#三、使用掩模" class="headerlink" title="三、使用掩模"></a>三、使用掩模</h3><figure class="highlight python"><figcaption><span>直方图</span><a href="https://jackmk.ctfile.com/fs/14155983-233412040" target="_blank" rel="noopener">histogram_with_mask.py</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np </span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_histogram</span><span class="params">(image,title,mask=None)</span>:</span></span><br><span class="line">    chans = cv2.split(image)</span><br><span class="line">    colors = (<span class="string">"b"</span>,<span class="string">"g"</span>,<span class="string">"r"</span>)</span><br><span class="line">    plt.figure()</span><br><span class="line">    plt.title(title)</span><br><span class="line">    plt.xlabel(<span class="string">"Bins"</span>)</span><br><span class="line">    plt.ylabel(<span class="string">"# of Pixels"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (chan,color) <span class="keyword">in</span> zip(chans,colors):</span><br><span class="line">        hist = cv2.calcHist([chan],[<span class="number">0</span>],mask,[<span class="number">256</span>],[<span class="number">0</span>,<span class="number">256</span>])</span><br><span class="line">        plt.plot(hist,color = color)</span><br><span class="line">        plt.xlim([<span class="number">0</span>,<span class="number">256</span>])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ap = argparse.ArgumentParser()</span><br><span class="line">ap.add_argument(<span class="string">"-i"</span>,<span class="string">"--image"</span>,required =<span class="keyword">True</span>, help=<span class="string">"Path to the image"</span>)</span><br><span class="line">args = vars(ap.parse_args())</span><br><span class="line"></span><br><span class="line">image = cv2.imread(args[<span class="string">"image"</span>])</span><br><span class="line">cv2.imshow(<span class="string">"Original"</span>,image)</span><br><span class="line"></span><br><span class="line">mask = np.zeros(image.shape[:<span class="number">2</span>],dtype =<span class="string">"uint8"</span>)</span><br><span class="line">(cx,cy) = (image.shape[<span class="number">1</span>]//<span class="number">2</span>,image.shape[<span class="number">0</span>]//<span class="number">2</span>)</span><br><span class="line">cv2.rectangle(mask,(cx<span class="number">-250</span>,cy<span class="number">-150</span>),(cx+<span class="number">200</span> ,cy+<span class="number">150</span>),<span class="number">255</span>,<span class="number">-1</span>)</span><br><span class="line">cv2.imshow(<span class="string">"Mask"</span>,mask)</span><br><span class="line"></span><br><span class="line">masked = cv2.bitwise_and(image,image,mask=mask)</span><br><span class="line">cv2.imshow(<span class="string">"Applying the mask"</span>,masked)</span><br><span class="line"></span><br><span class="line">plot_histogram(image,<span class="string">"Histogram for Masked Image"</span>,mask = mask)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br></pre></td></tr></table></figure>  
+<img src="/images/PracPythonOpenCV9-6.png" width="400" height="400" title="图·6">
+<blockquote class="blockquote-center">人生最大的痛苦不是失败，而是没有经历自己想要经历的一切.</blockquote>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="Harvey 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="Harvey 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/opencv/" rel="tag"># opencv</a>
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/29/PracPythonOpenCV/PracPythonOpenCV8/" rel="next" title="opencv入门8:色彩空间-color spaces">
+                <i class="fa fa-chevron-left"></i> opencv入门8:色彩空间-color spaces
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="hypercomments_widget"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/icon2.jpg"
+                alt="Harvey" />
+            
+              <p class="site-author-name" itemprop="name">Harvey</p>
+              <p class="site-description motion-element" itemprop="description">我的剑留给能够挥舞它的人</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.daozhihun.com/" title="Lieo" target="_blank">Lieo</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://mistysoul.github.io" title="MistySoul" target="_blank">MistySoul</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、使用opencv计算直方图"><span class="nav-number">1.</span> <span class="nav-text">一、使用opencv计算直方图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、直方图均衡化-histogram-equalization"><span class="nav-number">2.</span> <span class="nav-text">二、直方图均衡化 -histogram equalization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、使用掩模"><span class="nav-number">3.</span> <span class="nav-text">三、使用掩模</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Harvey</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_sphere.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+		<script type="text/javascript">
+		_hcwp = window._hcwp || [];
+
+		_hcwp.push({widget:"Bloggerstream", widget_id: 99649, selector:".hc-comment-count", label: "{\%COUNT%\}" });
+
+		
+		_hcwp.push({widget:"Stream", widget_id: 99649, xid: "2018/01/29/PracPythonOpenCV/PracPythonOpenCV9/"});
+		
+
+		(function() {
+		if("HC_LOAD_INIT" in window)return;
+		HC_LOAD_INIT = true;
+		var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage || "en").substr(0, 2).toLowerCase();
+		var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
+		hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://w.hypercomments.com/widget/hc/99649/"+lang+"/widget.js";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hcc, s.nextSibling);
+		})();
+		</script>
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("b0Ix1DTVkr84MSDUPOXW9YwH-gzGzoHsz", "FXt2NqD2uEq3vsKIC3MPqYHL");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
