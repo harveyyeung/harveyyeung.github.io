@@ -4,6 +4,50 @@
 
     
   <url>
+    <loc>https://harveyyeung.github.io/2018/01/31/PracPythonOpenCV/PracPythonOpenCV10/</loc>
+    <lastmod>2018-01-31T03:31:43.321Z</lastmod>
+    <data>
+        <display>
+        <title>opencv入门9:平滑和模糊-SMOOTHING AND BLURRING</title>
+        <pubTime>2018-01-31T03:23:26.000Z</pubTime>
+        
+        <tag>opencv</tag>
+         
+        <tag>python</tag>
+         
+         
+           
+             
+              <breadCrumb title="opencv" url="https://harveyyeung.github.io/categories/opencv/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://harveyyeung.github.io/2018/01/29/PracPythonOpenCV/PracPythonOpenCV9/</loc>
+    <lastmod>2018-01-31T03:24:01.157Z</lastmod>
+    <data>
+        <display>
+        <title>opencv入门9:直方图-histogram</title>
+        <pubTime>2018-01-29T03:18:07.000Z</pubTime>
+        
+        <tag>opencv</tag>
+         
+        <tag>python</tag>
+         
+         
+           
+             
+              <breadCrumb title="opencv" url="https://harveyyeung.github.io/categories/opencv/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://harveyyeung.github.io/2018/01/25/PracPythonOpenCV/PracPythonOpenCV7/</loc>
     <lastmod>2018-01-29T03:39:15.047Z</lastmod>
     <data>
@@ -32,28 +76,6 @@
         <display>
         <title>opencv入门8:色彩空间-color spaces</title>
         <pubTime>2018-01-29T03:06:03.000Z</pubTime>
-        
-        <tag>opencv</tag>
-         
-        <tag>python</tag>
-         
-         
-           
-             
-              <breadCrumb title="opencv" url="https://harveyyeung.github.io/categories/opencv/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://harveyyeung.github.io/2018/01/29/PracPythonOpenCV/PracPythonOpenCV9/</loc>
-    <lastmod>2018-01-29T03:36:29.408Z</lastmod>
-    <data>
-        <display>
-        <title>opencv入门9:直方图-histogram</title>
-        <pubTime>2018-01-29T03:18:07.000Z</pubTime>
         
         <tag>opencv</tag>
          

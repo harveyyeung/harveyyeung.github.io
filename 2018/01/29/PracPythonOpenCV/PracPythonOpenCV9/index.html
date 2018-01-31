@@ -95,7 +95,7 @@
 <meta property="og:image" content="https://harveyyeung.github.io/images/PracPythonOpenCV9-4.png">
 <meta property="og:image" content="https://harveyyeung.github.io/images/PracPythonOpenCV9-5.png">
 <meta property="og:image" content="https://harveyyeung.github.io/images/PracPythonOpenCV9-6.png">
-<meta property="og:updated_time" content="2018-01-29T03:36:29.408Z">
+<meta property="og:updated_time" content="2018-01-31T03:24:01.157Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="opencv入门9:直方图-histogram">
 <meta name="twitter:description" content="什么是直方图呢？通过直方图你可以对整幅图像的灰度分布有一个整体的了解。直方图的x 轴是灰度值（0 到255），y 轴是图片中具有同一个灰度值的点的数目。 直方图其实就是对图像的另一种解释。一下图为例，通过直方图我们可以对图像的对比度，亮度，灰度分布等有一个直观的认识。几乎所有的图像处理软件都提供了直方图分析功能。下图来自Cambridge in Color website，强烈推荐你到这个网站了解">
@@ -427,6 +427,7 @@
 <h3 id="三、使用掩模"><a href="#三、使用掩模" class="headerlink" title="三、使用掩模"></a>三、使用掩模</h3><figure class="highlight python"><figcaption><span>直方图</span><a href="https://jackmk.ctfile.com/fs/14155983-233412040" target="_blank" rel="noopener">histogram_with_mask.py</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np </span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_histogram</span><span class="params">(image,title,mask=None)</span>:</span></span><br><span class="line">    chans = cv2.split(image)</span><br><span class="line">    colors = (<span class="string">"b"</span>,<span class="string">"g"</span>,<span class="string">"r"</span>)</span><br><span class="line">    plt.figure()</span><br><span class="line">    plt.title(title)</span><br><span class="line">    plt.xlabel(<span class="string">"Bins"</span>)</span><br><span class="line">    plt.ylabel(<span class="string">"# of Pixels"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (chan,color) <span class="keyword">in</span> zip(chans,colors):</span><br><span class="line">        hist = cv2.calcHist([chan],[<span class="number">0</span>],mask,[<span class="number">256</span>],[<span class="number">0</span>,<span class="number">256</span>])</span><br><span class="line">        plt.plot(hist,color = color)</span><br><span class="line">        plt.xlim([<span class="number">0</span>,<span class="number">256</span>])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ap = argparse.ArgumentParser()</span><br><span class="line">ap.add_argument(<span class="string">"-i"</span>,<span class="string">"--image"</span>,required =<span class="keyword">True</span>, help=<span class="string">"Path to the image"</span>)</span><br><span class="line">args = vars(ap.parse_args())</span><br><span class="line"></span><br><span class="line">image = cv2.imread(args[<span class="string">"image"</span>])</span><br><span class="line">cv2.imshow(<span class="string">"Original"</span>,image)</span><br><span class="line"></span><br><span class="line">mask = np.zeros(image.shape[:<span class="number">2</span>],dtype =<span class="string">"uint8"</span>)</span><br><span class="line">(cx,cy) = (image.shape[<span class="number">1</span>]//<span class="number">2</span>,image.shape[<span class="number">0</span>]//<span class="number">2</span>)</span><br><span class="line">cv2.rectangle(mask,(cx<span class="number">-250</span>,cy<span class="number">-150</span>),(cx+<span class="number">200</span> ,cy+<span class="number">150</span>),<span class="number">255</span>,<span class="number">-1</span>)</span><br><span class="line">cv2.imshow(<span class="string">"Mask"</span>,mask)</span><br><span class="line"></span><br><span class="line">masked = cv2.bitwise_and(image,image,mask=mask)</span><br><span class="line">cv2.imshow(<span class="string">"Applying the mask"</span>,masked)</span><br><span class="line"></span><br><span class="line">plot_histogram(image,<span class="string">"Histogram for Masked Image"</span>,mask = mask)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br></pre></td></tr></table></figure>  
 <img src="/images/PracPythonOpenCV9-6.png" width="400" height="400" title="图·6">
 <blockquote class="blockquote-center">人生最大的痛苦不是失败，而是没有经历自己想要经历的一切.</blockquote>
+
       
     </div>
     
@@ -496,6 +497,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/31/PracPythonOpenCV/PracPythonOpenCV10/" rel="prev" title="opencv入门9:平滑和模糊-SMOOTHING AND BLURRING">
+                opencv入门9:平滑和模糊-SMOOTHING AND BLURRING <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -607,7 +612,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
