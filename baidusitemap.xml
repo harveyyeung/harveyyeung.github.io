@@ -4,8 +4,30 @@
 
     
   <url>
+    <loc>https://harveyyeung.github.io/2018/02/01/PracPythonOpenCV/PracPythonOpenCV11/</loc>
+    <lastmod>2018-03-07T07:30:19.487Z</lastmod>
+    <data>
+        <display>
+        <title>opencv入门11:图像阀值-thresholding</title>
+        <pubTime>2018-02-01T06:32:39.000Z</pubTime>
+        
+        <tag>opencv</tag>
+         
+        <tag>python</tag>
+         
+         
+           
+             
+              <breadCrumb title="opencv" url="https://harveyyeung.github.io/categories/opencv/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://harveyyeung.github.io/2018/01/31/PracPythonOpenCV/PracPythonOpenCV10/</loc>
-    <lastmod>2018-01-31T03:33:24.197Z</lastmod>
+    <lastmod>2018-01-31T04:28:19.179Z</lastmod>
     <data>
         <display>
         <title>opencv入门10:平滑和模糊-SMOOTHING AND BLURRING</title>
