@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://harveyyeung.github.io/2018/05/15/TensorFlow/tensorflowFreeGpu/</loc>
+    
+    <lastmod>2018-05-15T10:20:18.499Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://harveyyeung.github.io/2018/05/11/PracPythonOpenCV/PracPythonOpenCV12/</loc>
     
     <lastmod>2018-05-11T04:29:20.265Z</lastmod>

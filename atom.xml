@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://harveyyeung.github.io/"/>
-  <updated>2018-05-11T04:29:20.265Z</updated>
+  <updated>2018-05-15T10:20:18.499Z</updated>
   <id>https://harveyyeung.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>解决tensorflow会话结束后,GPU资源不释放</title>
+    <link href="https://harveyyeung.github.io/2018/05/15/TensorFlow/tensorflowFreeGpu/"/>
+    <id>https://harveyyeung.github.io/2018/05/15/TensorFlow/tensorflowFreeGpu/</id>
+    <published>2018-05-15T09:48:17.000Z</published>
+    <updated>2018-05-15T10:20:18.499Z</updated>
+    
+    <content type="html"><![CDATA[<p>在使用tensorflow对医疗影像x-ray胸片进行在线病理诊断时发现,在进行一次图片处理之后GPU占用率一直被服务进程100%占用，资源不会自动释放。tensorflow issue上查找问题发现,这个问题原本就是tf设计上的一个bug,问题还没有被正确修复。<a href="https://github.com/tensorflow/tensorflow/issues/1727" target="_blank" rel="noopener">https://github.com/tensorflow/tensorflow/issues/1727</a></p><p>问题解决只能每次去杀掉进程来释放资源。而我们是提供的webServer在线提供tf判断。</p><p>由于我们的webserver是python做的。基本思路就是再调用TF方法处理时启一个子进程进行方法处理，处理完成后进程结束释放资源。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">@app.route(&apos;/occlusion/&lt;slug&gt;&apos;, methods=[&apos;POST&apos;])</span><br><span class="line">def getOcclusion(slug):</span><br><span class="line">    filename = os.path.realpath(&apos;.&apos;) + &apos;/upload/files/&apos;+slug</span><br><span class="line">    return_dict = main(filename,True)</span><br><span class="line">    testprobability=return_dict[&apos;probability&apos;]</span><br><span class="line">    result = jsonify(&#123;&apos;index&apos;: np.argmax(testprobability),&apos;value&apos;:str(np.max(testprobability)),&quot;hotImageFlag&quot;:hotImageFlag&#125;)</span><br><span class="line">    return   result</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def run_graph(*****, return_dict):</span><br><span class="line">     config = tf.ConfigProto(allow_soft_placement=True,device_count=&#123;&apos;gpu&apos;:0&#125;)          </span><br><span class="line">     config.gpu_options.per_process_gpu_memory_fraction=0.05</span><br><span class="line">     with tf.Session(config=config) as sess:</span><br><span class="line">        occlusion_array_string = StringIO()</span><br><span class="line">        </span><br><span class="line">        probability = sess.run(softmax_tensor[:, :],&#123;input_layer_name: occlusion_array_string.getvalue()&#125;)</span><br><span class="line">        occlusion_array_string.close()</span><br><span class="line">        return_dict[&apos;probability&apos;] = probability</span><br><span class="line">      </span><br><span class="line"></span><br><span class="line">def main(filename,noHotImage):</span><br><span class="line">    #   if argv[1:]:</span><br><span class="line">    #     raise ValueError(&quot;Unused Command Line Args: %s&quot; % argv[1:])</span><br><span class="line">    # load graph, which is stored in the default session</span><br><span class="line">    load_graph(&apos;x_ray/retrained_graph_pneumonia.pb&apos;)</span><br><span class="line"></span><br><span class="line">    occlusion_array, image_data = load_image(filename)</span><br><span class="line">    # load labels</span><br><span class="line">    labels = load_labels(&apos;x_ray/output_labels_pneumonia.txt&apos;)</span><br><span class="line">    # 此处multiprocessing的Manager接收run_graph执行后的结果</span><br><span class="line">    manager = Manager()</span><br><span class="line">    return_dict = manager.dict()</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    # 此处multiprocessing的Process使用子进程执行run_graph, run_graph中是tf的操作  </span><br><span class="line">    p = Process(target=run_graph, args=(****,return_dict))</span><br><span class="line">    p.start()</span><br><span class="line">    #子进程处理完后结束进程，这时GPU 资源会释放</span><br><span class="line">    p.join()</span><br><span class="line">    print(&quot;return_dict:&quot; + str(return_dict))</span><br><span class="line">    return return_dict</span><br><span class="line">    </span><br></pre></td></tr></table></figure>  <p>以上为我工程中相关的代码段，不完成提供思路，你只需要重点关注main方法中Process的应用。<br>上面代码中还需要注意的是，由于我需要将结果返回给前端。这里需要接收子进程中的执行结果，multiprocessing的Manager接收run_graph执行后的结果。并返回给服务接口。</p><p>当然还有一种比较低级的方式就是通过以下方式设定固定的gpu占用率。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config.gpu_options.per_process_gpu_memory_fraction=0.05</span><br></pre></td></tr></table></figure></p><blockquote class="blockquote-center">数风流人物，还看今朝。</blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;在使用tensorflow对医疗影像x-ray胸片进行在线病理诊断时发现,在进行一次图片处理之后GPU占用率一直被服务进程100%占用，资源不会自动释放。tensorflow issue上查找问题发现,这个问题原本就是tf设计上的一个bug,问题还没有被正确修复。&lt;a hr
+      
+    
+    </summary>
+    
+      <category term="tensorflow" scheme="https://harveyyeung.github.io/categories/tensorflow/"/>
+    
+    
+      <category term="tensorflow" scheme="https://harveyyeung.github.io/tags/tensorflow/"/>
+    
+  </entry>
   
   <entry>
     <title>opencv入门12:梯度和边缘检测-GRADIENTS AND EDGE DETECTION</title>
