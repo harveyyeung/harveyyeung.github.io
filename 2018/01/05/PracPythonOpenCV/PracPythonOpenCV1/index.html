@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="opencv,python," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Harvey`s note" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="这是我在学习Practical Python and OpenCV(点击下载)这本书的一些记录。计算机视觉的目标是理解图片中展示的内容。为了探索计算机视觉的世界，我们首先需要安装一些软件包和库。作为计算机视觉的初学者，安装其中一些软件包（特别是OpenCV）可能非常繁琐，具体取决于您使用的操作系统。如果遇到问题，请务必查阅软件包的网站以获取最新的安装说明。强烈建议您使用pip来管理软件包的安装。">
+<meta name="keywords" content="opencv,python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="opencv入门1:opencv开发前的准备工作">
+<meta property="og:url" content="https://harveyyeung.github.io/2018/01/05/PracPythonOpenCV/PracPythonOpenCV1/index.html">
+<meta property="og:site_name" content="Harvey`s note">
+<meta property="og:description" content="这是我在学习Practical Python and OpenCV(点击下载)这本书的一些记录。计算机视觉的目标是理解图片中展示的内容。为了探索计算机视觉的世界，我们首先需要安装一些软件包和库。作为计算机视觉的初学者，安装其中一些软件包（特别是OpenCV）可能非常繁琐，具体取决于您使用的操作系统。如果遇到问题，请务必查阅软件包的网站以获取最新的安装说明。强烈建议您使用pip来管理软件包的安装。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://harveyyeung.github.io/images/practicalpythonopencv.png">
+<meta property="og:updated_time" content="2018-01-17T07:02:27.645Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="opencv入门1:opencv开发前的准备工作">
+<meta name="twitter:description" content="这是我在学习Practical Python and OpenCV(点击下载)这本书的一些记录。计算机视觉的目标是理解图片中展示的内容。为了探索计算机视觉的世界，我们首先需要安装一些软件包和库。作为计算机视觉的初学者，安装其中一些软件包（特别是OpenCV）可能非常繁琐，具体取决于您使用的操作系统。如果遇到问题，请务必查阅软件包的网站以获取最新的安装说明。强烈建议您使用pip来管理软件包的安装。">
+<meta name="twitter:image" content="https://harveyyeung.github.io/images/practicalpythonopencv.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://harveyyeung.github.io/2018/01/05/PracPythonOpenCV/PracPythonOpenCV1/"/>
+
+
+
+
+
+  <title>opencv入门1:opencv开发前的准备工作 | Harvey`s note</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7fbcdec62427b3cceb1e64dce6367af4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Harvey`s note</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">专注当前的任务，控制支出</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://harveyyeung.github.io/2018/01/05/PracPythonOpenCV/PracPythonOpenCV1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Harvey">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/icon2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Harvey`s note">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">opencv入门1:opencv开发前的准备工作</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-05T13:36:34+08:00">
+                2018-01-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/opencv/" itemprop="url" rel="index">
+                    <span itemprop="name">opencv</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/01/05/PracPythonOpenCV/PracPythonOpenCV1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/01/05/PracPythonOpenCV/PracPythonOpenCV1/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+             <span id="/2018/01/05/PracPythonOpenCV/PracPythonOpenCV1/" class="leancloud_visitors" data-flag-title="opencv入门1:opencv开发前的准备工作">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <img src="/images/practicalpythonopencv.png" width="200" height="300">
+<p>这是我在学习<a href="https://jackmk.ctfile.com/fs/14155983-233384097" target="_blank" rel="noopener">Practical Python and OpenCV</a>(<a href="https://jackmk.ctfile.com/fs/14155983-233384097" target="_blank" rel="noopener">点击下载</a>)这本书的一些记录。计算机视觉的目标是理解图片中展示的内容。为了探索计算机视觉的世界，我们首先需要安装一些软件包和库。作为计算机视觉的初学者，安装其中一些软件包（特别是OpenCV）可能非常繁琐，具体取决于您使用的操作系统。如果遇到问题，请务必查阅软件包的网站以获取最新的安装说明。强烈建议您使用pip来管理软件包的安装。</p>
+<h3 id="python"><a href="#python" class="headerlink" title="python"></a>python</h3><p>&emsp;&emsp;在搭建环境的开始，首先确保你已经安装了python.如何安装请看： <a href="http://www.runoob.com/python/python-install.html" target="_blank" rel="noopener">http://www.runoob.com/python/python-install.html</a></p>
+<h3 id="opencv"><a href="#opencv" class="headerlink" title="opencv"></a><a href="http://opencv.org/" target="_blank" rel="noopener">opencv</a></h3><p>&emsp;&emsp;如果NumPy的主要目标是大型高效的多维数组表示，那么OpenCV的主要目标就是实时图像处理,书中作者收集了PyImageSearch上各种Python版本和操作系统的OpenCV安装教程,<a href="https://www.pyimagesearch.com/opencv-tutorials-resources-guides/" target="_blank" rel="noopener">教程地址</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip install opencv-python <span class="comment">#安装Opencv-python 的命令</span></span><br></pre></td></tr></table></figure>
+<h3 id="numpy-和-scipy"><a href="#numpy-和-scipy" class="headerlink" title="numpy 和 scipy"></a><a href="http://www.numpy.org/" target="_blank" rel="noopener">numpy</a> 和 <a href="https://www.scipy.org/" target="_blank" rel="noopener">scipy</a></h3><p>&emsp;&emsp;<a href="http://www.numpy.org/" target="_blank" rel="noopener">numpy</a>是Python编程语言的一个库，为大型多维数组提供支持。使用numpy可以将图片转换为多维数组。将图像表示为NumPy数组在计算上和资源效率上表现优异，许多其他图像处理和机器学习库也使用NumPy数组表示。通过使用NumPy内置的高级数学函数，我们可以快速，方便地对图像进行数值分析。</p>
+<p>&emsp;&emsp;<a href="https://www.scipy.org/" target="_blank" rel="noopener">scipy</a>是一个高级的科学计算库，它和Numpy联系很密切，Scipy一般都是操控Numpy数组来进行科学计算，所以可以说是基于Numpy之上了。Scipy有很多子模块可以应对不同的应用，例如插值运算，优化算法、图像处理、数学统计等。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ pip install numpy <span class="comment">#安装numpy</span></span><br><span class="line">$ pip install scipy <span class="comment">#安装scipy</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="matplotlib"><a href="#matplotlib" class="headerlink" title="matplotlib"></a><a href="http://matplotlib.org/" target="_blank" rel="noopener">matplotlib</a></h3><p>&emsp;&emsp;<a href="http://matplotlib.org/" target="_blank" rel="noopener">matplotlib</a> 是一个绘图库。如果你以前曾经使用过MATLAB，那么在matplotlib环境中你可能会觉得很顺手。分析图像时，我们将使用matplotlib。无论是绘制图像直方图还是简单地查看图像本身，matplotlib都是您工具箱中的绝佳工具。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip install matplotlib <span class="comment">#安装matplotlib</span></span><br></pre></td></tr></table></figure>
+<h3 id="mahotas"><a href="#mahotas" class="headerlink" title="mahotas"></a><a href="http://mahotas.readthedocs.io/en/latest/#" target="_blank" rel="noopener">mahotas</a></h3><p>&emsp;&emsp;<a href="http://mahotas.readthedocs.io/en/latest/#" target="_blank" rel="noopener">mahotas</a> 就像OpenCV一样依赖于NumPy数组。在Mahotas中实现的许多功能都可以在OpenCV中找到，但在某些情况下，Mahotas接口更容易使用。我们将使用Mahotas来补充OpenCV。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip install mathotas <span class="comment">#安装mathotas</span></span><br></pre></td></tr></table></figure>
+<div class="note danger"><p>安装失败提示需要  Microsoft Visual C++ 14.0 is required.<br>在<a href="https://www.lfd.uci.edu/~gohlke/pythonlibs/#mahotas下载对应版本" target="_blank" rel="noopener">https://www.lfd.uci.edu/~gohlke/pythonlibs/#mahotas下载对应版本</a>,<br>执行pip install mathotas-1.4.0.cp<strong><em>*</em></strong>.whl  安装</p></div>
+<h3 id="scikit-learn"><a href="#scikit-learn" class="headerlink" title="scikit-learn"></a><a href="http://scikit-learn.org/" target="_blank" rel="noopener">scikit-learn</a></h3><p>&emsp;&emsp;<a href="http://scikit-learn.org/" target="_blank" rel="noopener">scikit-learn</a> 是机器学习的算法和工具的集合</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip install scikit-learn</span><br></pre></td></tr></table></figure>
+<h3 id="scikit-image"><a href="#scikit-image" class="headerlink" title="scikit-image"></a><a href="http://scikit-image.org/" target="_blank" rel="noopener">scikit-image</a></h3><p><a href="http://scikit-image.org/" target="_blank" rel="noopener">scikit-image</a>  是图像处理算法的集合<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip install -U scikit-image</span><br></pre></td></tr></table></figure></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>&emsp;&emsp;此书需要的包都安装完毕了，以上使用到的包在此<a href="https://www.scipy.org/about.html" target="_blank" rel="noopener">https://www.scipy.org/about.html</a>有罗列，有兴趣的朋友可以查看相关官网详细了解各包的具体使用方式和包含的方法.</p>
+<div class="note warning"><p>如果有包安装失败建议在<a href="https://www.lfd.uci.edu/~gohlke/pythonlibs/" target="_blank" rel="noopener">python库</a>中找到对应的whl包，使用下载包在相关python 环境中执行 pip install …..whl</p></div>
+<blockquote class="blockquote-center">凡事往简单处想，往认真处行</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="Harvey 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="Harvey 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/opencv/" rel="tag"># opencv</a>
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/05/PracPythonOpenCV/PracPythonOpenCV2/" rel="prev" title="opencv入门2:使用opencv简单画图">
+                opencv入门2:使用opencv简单画图 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="hypercomments_widget"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/icon2.jpg"
+                alt="Harvey" />
+            
+              <p class="site-author-name" itemprop="name">Harvey</p>
+              <p class="site-description motion-element" itemprop="description">我的剑留给能够挥舞它的人</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.daozhihun.com/" title="Lieo" target="_blank">Lieo</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://mistysoul.github.io" title="MistySoul" target="_blank">MistySoul</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#python"><span class="nav-number">1.</span> <span class="nav-text">python</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#opencv"><span class="nav-number">2.</span> <span class="nav-text">opencv</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-和-scipy"><span class="nav-number">3.</span> <span class="nav-text">numpy 和 scipy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#matplotlib"><span class="nav-number">4.</span> <span class="nav-text">matplotlib</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mahotas"><span class="nav-number">5.</span> <span class="nav-text">mahotas</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#scikit-learn"><span class="nav-number">6.</span> <span class="nav-text">scikit-learn</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#scikit-image"><span class="nav-number">7.</span> <span class="nav-text">scikit-image</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">8.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Harvey</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_sphere.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+		<script type="text/javascript">
+		_hcwp = window._hcwp || [];
+
+		_hcwp.push({widget:"Bloggerstream", widget_id: 99649, selector:".hc-comment-count", label: "{\%COUNT%\}" });
+
+		
+		_hcwp.push({widget:"Stream", widget_id: 99649, xid: "2018/01/05/PracPythonOpenCV/PracPythonOpenCV1/"});
+		
+
+		(function() {
+		if("HC_LOAD_INIT" in window)return;
+		HC_LOAD_INIT = true;
+		var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage || "en").substr(0, 2).toLowerCase();
+		var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
+		hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://w.hypercomments.com/widget/hc/99649/"+lang+"/widget.js";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hcc, s.nextSibling);
+		})();
+		</script>
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("b0Ix1DTVkr84MSDUPOXW9YwH-gzGzoHsz", "FXt2NqD2uEq3vsKIC3MPqYHL");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

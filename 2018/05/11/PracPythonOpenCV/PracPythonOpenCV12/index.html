@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="opencv,python," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Harvey`s note" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="一、图像梯度： 图像梯度，图像边界等 使用到的函数有：cv2.Sobel()，cv2.Schar()，cv2.Laplacian() 等 cv2.THRESH_TRUNC cv2.THRESH_TOZERO cv2.THRESH_TOZERO_INV  梯度简单来说就是求导。OpenCV 提供了三种不同的梯度滤波器，或者说高通滤波器：Sobel，Scharr 和Laplacian。下面会一一介绍他">
+<meta name="keywords" content="opencv,python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="opencv入门12:梯度和边缘检测-GRADIENTS AND EDGE DETECTION">
+<meta property="og:url" content="https://harveyyeung.github.io/2018/05/11/PracPythonOpenCV/PracPythonOpenCV12/index.html">
+<meta property="og:site_name" content="Harvey`s note">
+<meta property="og:description" content="一、图像梯度： 图像梯度，图像边界等 使用到的函数有：cv2.Sobel()，cv2.Schar()，cv2.Laplacian() 等 cv2.THRESH_TRUNC cv2.THRESH_TOZERO cv2.THRESH_TOZERO_INV  梯度简单来说就是求导。OpenCV 提供了三种不同的梯度滤波器，或者说高通滤波器：Sobel，Scharr 和Laplacian。下面会一一介绍他">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://harveyyeung.github.io/images/PracPythonOpenCV12-1.png">
+<meta property="og:image" content="https://harveyyeung.github.io/images/PracPythonOpenCV12-2.png">
+<meta property="og:image" content="https://harveyyeung.github.io/images/PracPythonOpenCV12-3.png">
+<meta property="og:image" content="https://harveyyeung.github.io/images/PracPythonOpenCV12-4.png">
+<meta property="og:image" content="https://harveyyeung.github.io/images/PracPythonOpenCV12-5.png">
+<meta property="og:image" content="https://harveyyeung.github.io/images/PracPythonOpenCV12-6.png">
+<meta property="og:image" content="https://harveyyeung.github.io/images/PracPythonOpenCV12-7.png">
+<meta property="og:image" content="https://harveyyeung.github.io/images/PracPythonOpenCV12-8.png">
+<meta property="og:updated_time" content="2018-05-11T04:29:20.265Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="opencv入门12:梯度和边缘检测-GRADIENTS AND EDGE DETECTION">
+<meta name="twitter:description" content="一、图像梯度： 图像梯度，图像边界等 使用到的函数有：cv2.Sobel()，cv2.Schar()，cv2.Laplacian() 等 cv2.THRESH_TRUNC cv2.THRESH_TOZERO cv2.THRESH_TOZERO_INV  梯度简单来说就是求导。OpenCV 提供了三种不同的梯度滤波器，或者说高通滤波器：Sobel，Scharr 和Laplacian。下面会一一介绍他">
+<meta name="twitter:image" content="https://harveyyeung.github.io/images/PracPythonOpenCV12-1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://harveyyeung.github.io/2018/05/11/PracPythonOpenCV/PracPythonOpenCV12/"/>
+
+
+
+
+
+  <title>opencv入门12:梯度和边缘检测-GRADIENTS AND EDGE DETECTION | Harvey`s note</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7fbcdec62427b3cceb1e64dce6367af4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Harvey`s note</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">专注当前的任务，控制支出</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://harveyyeung.github.io/2018/05/11/PracPythonOpenCV/PracPythonOpenCV12/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Harvey">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/icon2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Harvey`s note">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">opencv入门12:梯度和边缘检测-GRADIENTS AND EDGE DETECTION</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-11T12:07:34+08:00">
+                2018-05-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/opencv/" itemprop="url" rel="index">
+                    <span itemprop="name">opencv</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/11/PracPythonOpenCV/PracPythonOpenCV12/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/05/11/PracPythonOpenCV/PracPythonOpenCV12/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+             <span id="/2018/05/11/PracPythonOpenCV/PracPythonOpenCV12/" class="leancloud_visitors" data-flag-title="opencv入门12:梯度和边缘检测-GRADIENTS AND EDGE DETECTION">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="一、图像梯度："><a href="#一、图像梯度：" class="headerlink" title="一、图像梯度："></a>一、图像梯度：</h3><ul>
+<li>图像梯度，图像边界等</li>
+<li>使用到的函数有：cv2.Sobel()，cv2.Schar()，cv2.Laplacian() 等</li>
+<li>cv2.THRESH_TRUNC</li>
+<li>cv2.THRESH_TOZERO</li>
+<li>cv2.THRESH_TOZERO_INV</li>
+</ul>
+<p>梯度简单来说就是求导。<br>OpenCV 提供了三种不同的梯度滤波器，或者说高通滤波器：<br>Sobel，Scharr 和Laplacian。<br>下面会一一介绍他们。<br>Sobel，Scharr 其实就是求一阶或二阶导数。Scharr 是对Sobel（使用<br>小的卷积核求解求解梯度角度时）的优化。Laplacian 是求二阶导数。</p>
+<h4 id="1：laplacian-and-sobel"><a href="#1：laplacian-and-sobel" class="headerlink" title="1：laplacian and sobel"></a>1：laplacian and sobel</h4><h5 id="Laplacian-算子"><a href="#Laplacian-算子" class="headerlink" title="Laplacian 算子"></a>Laplacian 算子</h5>  <img src="/images/PracPythonOpenCV12-1.png" width="400" height="400" title="图·1">
+<h5 id="Sobel-算子和Scharr-算子"><a href="#Sobel-算子和Scharr-算子" class="headerlink" title="Sobel 算子和Scharr 算子"></a>Sobel 算子和Scharr 算子</h5>  <img src="/images/PracPythonOpenCV12-2.png" width="400" height="400" title="图·2">
+<figure class="highlight python"><figcaption><span>Sobel算子和Scharr算子</span><a href="https://jackmk.ctfile.com/fs/14155983-233412040" target="_blank" rel="noopener">sobel_and_laplacian.py</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np </span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"></span><br><span class="line">ap = argparse.ArgumentParser()</span><br><span class="line">ap.add_argument(<span class="string">"-i"</span>,<span class="string">"--image"</span>,required =<span class="keyword">True</span>, help=<span class="string">"Path to the image"</span>)</span><br><span class="line">args = vars(ap.parse_args())</span><br><span class="line"></span><br><span class="line">image = cv2.imread(args[<span class="string">"image"</span>])</span><br><span class="line">image = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)</span><br><span class="line">cv2.imshow(<span class="string">"Original"</span>,image)</span><br><span class="line"></span><br><span class="line">lap = cv2.Laplacian(image,cv2.CV_64F)</span><br><span class="line"><span class="comment">#cv2.CV_64F 输出图像的深度（数据类型），可以使用-1, 与原图像保持一致np.uint8</span></span><br><span class="line"><span class="comment">#当我们可以通过参数-1 来设定输出图像的深度（数据类型）与原图像保持一致，但是我们在代码中使用的却是cv2.CV_64F。这是为什么呢 </span></span><br><span class="line"><span class="comment"># 原因涉及图像中的黑色到白色和白色到黑色的转变。</span></span><br><span class="line"><span class="comment"># 从黑色到白色的转换被认为是正斜率，而从白色到黑色的转换是负斜率。如果您还记得我们在第6章中对图像算术的讨论，您将会知道一个8位无符号整数不代表负值。如果您使用的是OpenCV，则它将被剪裁为零，否则将使用NumPy执行模数运算</span></span><br><span class="line"><span class="comment">#简短答案是，如果在计算梯度幅度图像时不使用浮点数据类型，则会错过边缘，特别是白色到黑色的过渡</span></span><br><span class="line">lap = np.uint8(np.absolute(lap))</span><br><span class="line"><span class="comment"># 为了确保捕捉所有的边缘，使用浮点数据类型，然后获取梯度图像的绝对值，并将其转换回8位无符号整数</span></span><br><span class="line">cv2.imshow(<span class="string">"Laplacian"</span>,lap)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sobelX = cv2.Sobel(image, cv2.CV_64F,<span class="number">1</span>,<span class="number">0</span>)  <span class="comment">#1,0表示x方向 </span></span><br><span class="line">sobelY = cv2.Sobel(image, cv2.CV_64F,<span class="number">0</span>,<span class="number">1</span>)  <span class="comment">#0,1表示y方向 </span></span><br><span class="line"></span><br><span class="line">sobelX = np.uint8(np.absolute(sobelX))</span><br><span class="line">sobelY = np.uint8(np.absolute(sobelY))</span><br><span class="line"></span><br><span class="line">sobelCombined = cv2.bitwise_or(sobelX,sobelY)</span><br><span class="line"></span><br><span class="line">cv2.imshow(<span class="string">"sobel X "</span>,sobelX)</span><br><span class="line">cv2.imshow(<span class="string">"sobel Y "</span>,sobelY)</span><br><span class="line">cv2.imshow(<span class="string">"sobel Combined "</span>,sobelCombined)</span><br><span class="line">cv2.waitKey(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>  
+<img src="/images/PracPythonOpenCV12-3.png" width="400" height="400" title="图·3">
+<h3 id="二、Canny-边缘检测："><a href="#二、Canny-边缘检测：" class="headerlink" title="二、Canny 边缘检测："></a>二、Canny 边缘检测：</h3><p>Canny边缘检测器是一个多步骤的过程。它涉及模糊图像以消除噪声，在x和y方向上计算Sobel梯度图像，抑制边缘，最后是确定像素是否“边缘状”的滞后阈值阶段。</p>
+<h5 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h5><p> Canny 边缘检测是一种非常流行的边缘检测算法，是John F.Canny 在1986 年提出的。它是一个有很多步构成的算法，我们接下来会逐步介绍。</p>
+<h5 id="噪声去除"><a href="#噪声去除" class="headerlink" title="噪声去除"></a>噪声去除</h5><p> 由于边缘检测很容易受到噪声影响，所以第一步是使用5x5 的高斯滤波器去除噪声，这个前面我们已经学过了。</p>
+<h5 id="计算图像梯度"><a href="#计算图像梯度" class="headerlink" title="计算图像梯度"></a>计算图像梯度</h5><p> 对平滑后的图像使用Sobel 算子计算水平方向和竖直方向的一阶导数（图像梯度）（Gx 和Gy）。根据得到的这两幅梯度图（Gx 和Gy）找到边界的梯度和方向，公式如下：</p>
+<img src="/images/PracPythonOpenCV12-4.png" width="400" height="400" title="图·4">
+<p>梯度的方向一般总是与边界垂直。梯度方向被归为四类：垂直，水平，和两个对角线。</p>
+<h5 id="非极大值抑制"><a href="#非极大值抑制" class="headerlink" title="非极大值抑制"></a>非极大值抑制</h5><p>在获得梯度的方向和大小之后，应该对整幅图像做一个扫描，去除那些非<br>边界上的点。对每一个像素进行检查，看这个点的梯度是不是周围具有相同梯<br>度方向的点中最大的。如下图所示：<br><img src="/images/PracPythonOpenCV12-5.png" width="400" height="400" title="图·5"><br>现在你得到的是一个包含“窄边界”的二值图像。</p>
+<h5 id="滞后阈值"><a href="#滞后阈值" class="headerlink" title="滞后阈值"></a>滞后阈值</h5><p>现在要确定那些边界才是真正的边界。这时我们需要设置两个阈值：<br>minVal 和maxVal。当图像的灰度梯度高于maxVal 时被认为是真的边界，<br>那些低于minVal 的边界会被抛弃。如果介于两者之间的话，就要看这个点是<br>否与某个被确定为真正的边界点相连，如果是就认为它也是边界点，如果不是<br>就抛弃。如下图：</p>
+<img src="/images/PracPythonOpenCV12-6.png" width="400" height="400" title="图·6">
+<p>A 高于阈值maxVal 所以是真正的边界点，C 虽然低于maxVal 但高于<br>minVal 并且与A 相连，所以也被认为是真正的边界点。而B 就会被抛弃，因<br>为他不仅低于maxVal 而且不与真正的边界点相连。所以选择合适的maxVal<br>和minVal 对于能否得到好的结果非常重要。<br>在这一步一些小的噪声点也会被除去，因为我们假设边界都是一些长的线<br>段。</p>
+<h5 id="OpenCV-中的Canny-边界检测"><a href="#OpenCV-中的Canny-边界检测" class="headerlink" title="OpenCV 中的Canny 边界检测"></a>OpenCV 中的Canny 边界检测</h5><p>在OpenCV 中只需要一个函数：cv2.Canny()，就可以完成以上几步。<br>让我们看如何使用这个函数。这个函数的第一个参数是输入图像。第二和第三<br>个分别是minVal 和maxVal。第三个参数设置用来计算图像梯度的Sobel<br>卷积核的大小，默认值为3。最后一个参数是L2gradient，它可以用来设定<br>求梯度大小的方程。如果设为True，就会使用我们上面提到过的方程，否则<br>使用方程：</p>
+<img src="/images/PracPythonOpenCV12-7.png" width="400" height="400" title="图·7">
+<p>代替，默认值为False。</p>
+<figure class="highlight python"><figcaption><span>Canny边界检测</span><a href="https://jackmk.ctfile.com/fs/14155983-233412040" target="_blank" rel="noopener">canny.py</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"></span><br><span class="line">ap = argparse.ArgumentParser()</span><br><span class="line">ap.add_argument(<span class="string">"-i"</span>, <span class="string">"--image"</span>, required = <span class="keyword">True</span>,help = <span class="string">"Path to the image"</span>)</span><br><span class="line">args = vars(ap.parse_args())</span><br><span class="line"></span><br><span class="line">image = cv2.imread(args[<span class="string">"image"</span>])</span><br><span class="line">image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)</span><br><span class="line">image = cv2.GaussianBlur(image, (<span class="number">5</span>, <span class="number">5</span>), <span class="number">0</span>)</span><br><span class="line"><span class="comment"># 由于边缘检测很容易受到噪声影响，所以第一步是使用5x5 的高斯滤波器</span></span><br><span class="line"><span class="comment"># 去除噪声,通过在边缘检测之前应用模糊，我们将帮助去除图像中“我们不感兴趣”的“嘈杂”边缘</span></span><br><span class="line">cv2.imshow(<span class="string">"Blurred"</span>, image)</span><br><span class="line"></span><br><span class="line">canny = cv2.Canny(image, <span class="number">30</span>, <span class="number">150</span>)</span><br><span class="line"><span class="comment"># cv2.Canny(image, minVal, maxVal)</span></span><br><span class="line"><span class="comment"># 当图像的灰度梯度高于maxVal 时被认为是真的边界，</span></span><br><span class="line"><span class="comment"># 那些低于minVal 的边界会被抛弃。如果介于两者之间的话，就要看这个点是</span></span><br><span class="line"><span class="comment"># 否与某个被确定为真正的边界点相连，如果是就认为它也是边界点，如果不是</span></span><br><span class="line"><span class="comment"># 就抛弃。</span></span><br><span class="line">cv2.imshow(<span class="string">"Canny"</span>, canny)</span><br><span class="line">cv2.waitKey(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>  
+<img src="/images/PracPythonOpenCV12-8.png" title="图·8">    
+<blockquote class="blockquote-center">比智力更重要的往往是毅力。</blockquote>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="Harvey 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="Harvey 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/opencv/" rel="tag"># opencv</a>
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/01/PracPythonOpenCV/PracPythonOpenCV11/" rel="next" title="opencv入门11:图像阀值-thresholding">
+                <i class="fa fa-chevron-left"></i> opencv入门11:图像阀值-thresholding
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/15/TensorFlow/tensorflowFreeGpu/" rel="prev" title="解决tensorflow会话结束后,GPU资源不释放">
+                解决tensorflow会话结束后,GPU资源不释放 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="hypercomments_widget"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/icon2.jpg"
+                alt="Harvey" />
+            
+              <p class="site-author-name" itemprop="name">Harvey</p>
+              <p class="site-description motion-element" itemprop="description">我的剑留给能够挥舞它的人</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.daozhihun.com/" title="Lieo" target="_blank">Lieo</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://mistysoul.github.io" title="MistySoul" target="_blank">MistySoul</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、图像梯度："><span class="nav-number">1.</span> <span class="nav-text">一、图像梯度：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1：laplacian-and-sobel"><span class="nav-number">1.1.</span> <span class="nav-text">1：laplacian and sobel</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Laplacian-算子"><span class="nav-number">1.1.1.</span> <span class="nav-text">Laplacian 算子</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Sobel-算子和Scharr-算子"><span class="nav-number">1.1.2.</span> <span class="nav-text">Sobel 算子和Scharr 算子</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、Canny-边缘检测："><span class="nav-number">2.</span> <span class="nav-text">二、Canny 边缘检测：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#原理"><span class="nav-number">2.0.1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#噪声去除"><span class="nav-number">2.0.2.</span> <span class="nav-text">噪声去除</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#计算图像梯度"><span class="nav-number">2.0.3.</span> <span class="nav-text">计算图像梯度</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#非极大值抑制"><span class="nav-number">2.0.4.</span> <span class="nav-text">非极大值抑制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#滞后阈值"><span class="nav-number">2.0.5.</span> <span class="nav-text">滞后阈值</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#OpenCV-中的Canny-边界检测"><span class="nav-number">2.0.6.</span> <span class="nav-text">OpenCV 中的Canny 边界检测</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Harvey</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_sphere.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+		<script type="text/javascript">
+		_hcwp = window._hcwp || [];
+
+		_hcwp.push({widget:"Bloggerstream", widget_id: 99649, selector:".hc-comment-count", label: "{\%COUNT%\}" });
+
+		
+		_hcwp.push({widget:"Stream", widget_id: 99649, xid: "2018/05/11/PracPythonOpenCV/PracPythonOpenCV12/"});
+		
+
+		(function() {
+		if("HC_LOAD_INIT" in window)return;
+		HC_LOAD_INIT = true;
+		var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage || "en").substr(0, 2).toLowerCase();
+		var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
+		hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://w.hypercomments.com/widget/hc/99649/"+lang+"/widget.js";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hcc, s.nextSibling);
+		})();
+		</script>
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("b0Ix1DTVkr84MSDUPOXW9YwH-gzGzoHsz", "FXt2NqD2uEq3vsKIC3MPqYHL");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
