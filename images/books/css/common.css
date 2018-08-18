@@ -890,6 +890,15 @@ pre {
   position: relative;
 }
 
+.top-tags{
+  color:  #dfd7d7;
+}
+.top-tags a {
+  color: #fff!important;
+  text-decoration: underline;
+}
+
+
 @media (min-width: 1200px){
   .form-inline .form-control#search{
     width:400px;

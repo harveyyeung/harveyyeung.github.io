@@ -94,11 +94,15 @@ function previousPage(pageNum){
 	}
 	pageNum--;
 	var searchText =getQueryString("q");
+	var cotegoryid =getQueryString("c");
+	var gotoStr="/?page="+pageNum;
 	if(searchText){
-		window.location.href="/?q="+searchText+"&page="+pageNum
-	}else{
-		window.location.href="/?page="+pageNum
+		gotoStr+="&q="+searchText;
 	}
+	if(cotegoryid){
+		gotoStr+="&c="+cotegoryid;
+	}
+	window.location.href=gotoStr;
 }
 
 
@@ -107,25 +111,32 @@ function nextPage(pageNum,total){
 		return 
 	}
 	pageNum++;
-	var searchText = getQueryString("q");
+	var searchText =getQueryString("q");
+	var cotegoryid =getQueryString("c");
+	var gotoStr="/?page="+pageNum;
 	if(searchText){
-		window.location.href="/?q="+searchText+"&page="+pageNum
-	}else{
-		window.location.href="/?page="+pageNum
+		gotoStr+="&q="+searchText;
 	}
-
+	if(cotegoryid){
+		gotoStr+="&c="+cotegoryid;
+	}
+	window.location.href=gotoStr;
 }
 function gotoPageNum(total){
-	var goPageNum = $("goPageNum").val();
+	var goPageNum = $("#goPageNum").val();
 	if(goPageNum>=total||goPageNum<1){
 		return 
 	}
-	var searchText = getQueryString("q");
+	var searchText =getQueryString("q");
+	var cotegoryid =getQueryString("c");
+	var gotoStr="/?page="+goPageNum;
 	if(searchText){
-		window.location.href=getUrlPath+"?q="+searchText+"&page="+goPageNum
-	}else{
-		window.location.href=getUrlPath+"?page="+goPageNum
+		gotoStr+="&q="+searchText;
 	}
+	if(cotegoryid){
+		gotoStr+="&c="+cotegoryid;
+	}
+	window.location.href=gotoStr;
 }
 
 //获取url中的参数
